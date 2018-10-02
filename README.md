@@ -20,4 +20,9 @@ $ export PGPASSWORD=mysecretpassword && psql -U postgres -h 127.0.0.1`
 create database openawards;
 ```
 
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
 `$ python manage runserver`
