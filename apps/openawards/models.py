@@ -1,8 +1,8 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
-from django.utils.text import slugify
 from django.contrib.auth.models import User
+from apps.openawards.lib.utils import slugify_model
 
 
 class License(models.Model):
@@ -15,6 +15,7 @@ class License(models.Model):
 
 class Work(models.Model):
     title = models.CharField(max_length=200, blank=False, unique=True)
+    slug = models.CharField(max_length=100, unique=True)
     license = models.ForeignKey('License', on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     cover = models.ImageField(null=True)
@@ -22,9 +23,13 @@ class Work(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 
+@receiver(pre_save, sender=Work)
+def work_pre_save(sender, instance, *args, **kwargs):
+    slugify_model(instance, 'title')
+
+
 class Award(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a video title", unique=True)
-    # TODO: Non editable in admin
     slug = models.CharField(max_length=100, unique=True)
     created = models.DateField(null=True, blank=True)
     image = models.ImageField(null=True)
@@ -40,9 +45,8 @@ class Award(models.Model):
 
 
 @receiver(pre_save, sender=Award)
-def video_pre_save(sender, instance, *args, **kwargs):
-    # TODO: Ensure there is a proper procedure if repeated when assigned
-    instance.slug = slugify(instance.title)
+def award_pre_save(sender, instance, *args, **kwargs):
+    slugify_model(instance, 'name')
 
 
 class Vote(models.Model):
