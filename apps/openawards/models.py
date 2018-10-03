@@ -6,11 +6,11 @@ from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteExce
 
 
 class User(DjangoUser):
-    def __init__(self, *args, **kwargs):
-        super(User, self).__init__(args, kwargs)
-
     def vote(self, work, award):
-        if work.author != self or Vote.objects.filter(award=award, work=work, fan=self).first() is not None:
+        if work.creator == self \
+                or Vote.objects.filter(award=award, work=work, fan=self).first() is not None\
+                or work not in award.works.all()\
+                or not award.active:
             raise NotValidVoteException
         Vote(award=award, work=work, fan=self).save()
 
