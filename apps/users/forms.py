@@ -3,7 +3,7 @@
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from apps.users.models import BaseUser
+from django.apps import apps
 
 
 class SignUpForm(UserCreationForm):
@@ -12,5 +12,5 @@ class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
     class Meta:
-        model = BaseUser
+        model = apps.get_model('users', 'BaseUser')
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
