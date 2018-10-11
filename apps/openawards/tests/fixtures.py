@@ -18,7 +18,7 @@ def _get_tzinfo():
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = apps.get_model('openawards', 'User')
+        model = apps.get_model('users', 'BaseUser')
 
     username = factory.Faker('user_name')
     first_name = factory.Faker('first_name')

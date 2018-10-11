@@ -1,18 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
-from django.contrib.auth.models import User as DjangoUser
 from apps.openawards.lib.utils import slugify_model
-from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
-
-
-class User(DjangoUser):
-    def vote(self, work, award):
-        if work.creator == self \
-                or Vote.objects.filter(award=award, work=work, fan=self).first() is not None\
-                or work not in award.works.all()\
-                or not award.active:
-            raise NotValidVoteException
-        Vote(award=award, work=work, fan=self).save()
+from apps.openawards.exceptions import EnrollNotValidException
 
 
 class License(models.Model):
@@ -30,7 +19,7 @@ class Work(models.Model):
     description = models.TextField()
     cover = models.ImageField(null=True)
     created = models.DateField(null=True, blank=True)
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey('users.BaseUser', on_delete=models.SET_NULL, null=True)
 
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):
@@ -65,7 +54,7 @@ class Award(models.Model):
 
 
 class Vote(models.Model):
-    fan = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    fan = models.ForeignKey('users.BaseUser', on_delete=models.CASCADE, null=False)
     work = models.ForeignKey('Work', on_delete=models.CASCADE, null=False)
     award = models.ForeignKey('Award', on_delete=models.CASCADE, null=False)
 

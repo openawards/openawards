@@ -1,6 +1,7 @@
 from django.test import TestCase
 from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
 import apps.openawards.tests.fixtures as fixtures
+from apps.openawards.managers import vote
 
 
 class TestModels(TestCase):
@@ -63,7 +64,7 @@ class TestModels(TestCase):
         award = fixtures.AwardFactory()
         work = fixtures.WorkFactory()
         award.enroll_work(work)
-        user.vote(work, award)
+        vote(user, work, award)
         self.assertEqual(work.vote_set.count(), 1)
 
     def test_unable_to_vote_not_rolled_work(self):
@@ -74,7 +75,7 @@ class TestModels(TestCase):
         award = fixtures.AwardFactory()
         work = fixtures.WorkFactory()
         with self.assertRaises(NotValidVoteException):
-            user.vote(work, award)
+            vote(user, work, award)
 
     def test_vote_on_inactive_award(self):
         """
@@ -86,7 +87,7 @@ class TestModels(TestCase):
         award.enroll_work(work)
         award.active = False
         with self.assertRaises(NotValidVoteException):
-            user.vote(work, award)
+            vote(user, work, award)
 
     def test_vote_invalid_when_its_the_work_author(self):
         """
@@ -97,7 +98,7 @@ class TestModels(TestCase):
         work = fixtures.WorkFactory(creator=user)
         award.enroll_work(work)
         with self.assertRaises(NotValidVoteException):
-            user.vote(work, award)
+            vote(user, work, award)
 
     def test_vote_twice_for_the_same_work_on_the_same_award(self):
         """
@@ -107,9 +108,9 @@ class TestModels(TestCase):
         award = fixtures.AwardFactory()
         work = fixtures.WorkFactory()
         award.enroll_work(work)
-        user.vote(work, award)
+        vote(user, work, award)
         with self.assertRaises(NotValidVoteException):
-            user.vote(work, award)
+            vote(user, work, award)
 
     def test_vote_twice_for_the_same_work_on_different_awards(self):
         """
@@ -120,6 +121,6 @@ class TestModels(TestCase):
         work = fixtures.WorkFactory()
         award1.enroll_work(work)
         award2.enroll_work(work)
-        user.vote(work, award1)
-        user.vote(work, award2)
+        vote(user, work, award1)
+        vote(user, work, award2)
         self.assertEqual(work.vote_set.count(), 2)
