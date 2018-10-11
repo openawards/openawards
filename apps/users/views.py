@@ -1,9 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from apps.users.forms import SignUpForm
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
+from urllib.parse import urljoin
+
+
+def activate_url(request, user):
+    url = reverse('users_activate', args=(user.token,))
+    protocol = 'https' if request.is_secure else 'http'
+    domain = get_current_site(request).domain
+    return urljoin(f'{protocol}://{domain}', url)
 
 
 def signup(request):
@@ -15,7 +23,7 @@ def signup(request):
             user.save()
             subject = 'Activate Your MySite Account'
             message = render_to_string('emails/user_registration.html', {
-                'domain': get_current_site(request).domain,
+                'url': activate_url(request, user),
                 'user': user,
                 'token': user.token
             })
@@ -37,6 +45,7 @@ def activate(request, token):
         user.save()
         login(request, user)
         # TODO: Add successful activation message
+        # TODO: Redirect properly (should we take it from settings?)
         return redirect('/')
     else:
         return render(request, 'registration/user_activation_invalid.html')

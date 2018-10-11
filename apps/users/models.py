@@ -8,6 +8,9 @@ from django.dispatch import receiver
 class BaseUser(AbstractUser):
     token = models.CharField(max_length=36, blank=False, unique=True, null=False)
 
+    def generate_token(self):
+        self._generate_token(self)
+
     @receiver(pre_save, sender='users.BaseUser')
-    def generate_token(sender, instance, **kwargs):
+    def _generate_token(sender, instance, **kwargs):
         instance.token = str(uuid4()).replace('-', '')
