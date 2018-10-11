@@ -55,4 +55,4 @@ def activate(request, token):
 
 
 class UsersLoginView(LoginView):
-    redirect_authenticated_user = True  # FIXME: Why it is not working?
+    redirect_authenticated_user = True
