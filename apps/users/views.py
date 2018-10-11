@@ -18,6 +18,8 @@ def get_activate_url(request, user):
 
 
 def signup(request):
+    if request.user and request.user.is_authenticated:
+        return redirect('/')
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -45,6 +47,7 @@ def activate(request, token):
 
     if user is not None and not user.is_active:
         user.is_active = True
+        user.generate_token()
         user.save()
         login(request, user)
         # TODO: Add successful activation message
