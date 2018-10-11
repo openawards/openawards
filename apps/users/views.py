@@ -5,12 +5,15 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from urllib.parse import urljoin
+from django.contrib.auth.views import LoginView
 
 
-def activate_url(request, user):
+def get_activate_url(request, user):
     url = reverse('users_activate', args=(user.token,))
-    protocol = 'https' if request.is_secure else 'http'
     domain = get_current_site(request).domain
+    protocol = 'https' \
+        if request.is_secure and not (domain.startswith('127.0.0.1') or domain.startswith('localhost')) \
+        else 'http'
     return urljoin(f'{protocol}://{domain}', url)
 
 
@@ -23,7 +26,7 @@ def signup(request):
             user.save()
             subject = 'Activate Your MySite Account'
             message = render_to_string('emails/user_registration.html', {
-                'url': activate_url(request, user),
+                'url': get_activate_url(request, user),
                 'user': user,
                 'token': user.token
             })
@@ -49,3 +52,7 @@ def activate(request, token):
         return redirect('/')
     else:
         return render(request, 'registration/user_activation_invalid.html')
+
+
+class UsersLoginView(LoginView):
+    redirect_authenticated_user = True  # FIXME: Why it is not working?
