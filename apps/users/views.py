@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from apps.users.forms import SignUpForm
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login
 
 
 def signup(request):
@@ -22,3 +24,19 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def activate(request, token):
+    try:
+        user = get_user_model().objects.get(token=token)
+    except (TypeError, ValueError, OverflowError, get_user_model().DoesNotExist):
+        user = None
+
+    if user is not None and not user.is_active:
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # TODO: Add successful activation message
+        return redirect('/')
+    else:
+        return render(request, 'registration/user_activation_invalid.html')
