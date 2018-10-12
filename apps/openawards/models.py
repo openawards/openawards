@@ -2,13 +2,11 @@ from django.db import models
 from django.db.models.signals import pre_save
 from apps.openawards.lib.utils import slugify_model
 from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
-from django.contrib.auth.models import AbstractUser
+from apps.users.models import BaseUser
 from django.contrib.auth import get_user_model
 
 
-class User(AbstractUser):
-    email = models.EmailField('email address', blank=False, null=False, unique=True)
-
+class User(BaseUser):
     def vote(self, work, award):
         if work.creator == self \
                 or Vote.objects.filter(award=award, work=work, fan=self).first() is not None\

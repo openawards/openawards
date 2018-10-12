@@ -39,7 +39,7 @@ class TestModels(TestCase):
         n_current_users = get_user_model().objects.count()
         self.assertEqual(n_current_users, n_previous_users + 1)
 
-    def test_activate_url_expires(self):
+    def test_activate_url_does_not_expire(self):
         """
         Users who signed up one year ago should still be able to activate their account
         """
@@ -49,13 +49,6 @@ class TestModels(TestCase):
     def test_disabled_user_by_admin_remains_disabled_despite_accessing_to_activation_url_again(self):
         """
         Users who have been disabled by the admin cannot activate their account again by accessing the activation url
-        """
-        # TODO: This!
-        pass
-
-    def test_disabled_user_receives_activation_email_when_ask_for_forgiven_password(self):
-        """
-        Users who have not activate their account yet, when ask to change password receive a mail with activation url
         """
         # TODO: This!
         pass
