@@ -133,3 +133,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTH_USER_MODEL = 'openawards.User'
 
 DEV_SETTINGS_MODULE = 'OpenAwards.settings.dev'
+USER_FIXTURE_FACTORY_CLASS = 'openawards.tests.fixtures.UserFactory'
