@@ -4,16 +4,12 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.core import mail
+from ..lib.test_utils import get_user_fixtures_factory
 
 
-class TestModels(TestCase):
+class TestUsers(TestCase):
     def setUp(self):
-        from importlib import import_module
-        from django.conf import settings
-        path = settings.USER_FIXTURE_FACTORY_CLASS
-        s_module, cls = '.'.join(path.split('.')[:-1]), path.split('.')[-1]
-        module = import_module(s_module)
-        self.user_factory = getattr(module, cls)
+        self.user_factory = get_user_fixtures_factory()
 
     def get_activation_url(self):
         body = mail.outbox[0].body.split('\n')
@@ -39,13 +35,6 @@ class TestModels(TestCase):
         n_current_users = get_user_model().objects.count()
         self.assertEqual(n_current_users, n_previous_users + 1)
 
-    def test_activate_url_does_not_expire(self):
-        """
-        Users who signed up one year ago should still be able to activate their account
-        """
-        # TODO: This!
-        pass
-
     def test_disabled_user_by_admin_remains_disabled_despite_accessing_to_activation_url_again(self):
         """
         Users who have been disabled by the admin cannot activate their account again by accessing the activation url
@@ -67,9 +56,9 @@ class TestModels(TestCase):
         user = get_user_model().objects.get(username=username)
         self.assertFalse(user.is_active)
 
-    def test_confirmed_users_get_active(self):
+    def test_confirmed_users_turn_active(self):
         """
-        When users confirm their mail get active
+        When users confirm their mail turn active
         """
         username = 'usertest1'
         self.client.post('/users/signup', {
