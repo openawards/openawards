@@ -5,7 +5,7 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     def ready(self):
-        # TODO: This should be to a global app, meanwhile having it here is (more-or-less) fine
+        # TODO: This should be placed into a global app, meanwhile having it here is (more-or-less) fine
         # This ensures the SECRET_KEY has not been published on a git repo by checking the dev key
         from django.conf import settings
         from importlib import import_module
