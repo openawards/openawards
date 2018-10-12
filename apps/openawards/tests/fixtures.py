@@ -6,6 +6,7 @@ import datetime
 from django.conf import settings
 from django.utils import timezone
 from django.apps import apps
+from django.contrib.auth import get_user_model
 
 
 def _get_tzinfo():
@@ -18,7 +19,7 @@ def _get_tzinfo():
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = apps.get_model('users', 'BaseUser')
+        model = get_user_model()
 
     username = factory.Faker('user_name')
     first_name = factory.Faker('first_name')
