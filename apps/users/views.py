@@ -51,7 +51,10 @@ def activate(request, uuid, token):
     except (TypeError, ValueError, OverflowError, get_user_model().DoesNotExist):
         user = None
 
-    if user is not None and not user.is_active and AccountActivationTokenGenerator().check_token(user, token):
+    if user is not None \
+            and not user.is_active \
+            and not user.is_confirmed \
+            and AccountActivationTokenGenerator().check_token(user, token):
         user.is_active = True
         user.is_confirmed = True
         user.save()

@@ -39,8 +39,24 @@ class TestUsers(TestCase):
         """
         Users who have been disabled by the admin cannot activate their account again by accessing the activation url
         """
-        # TODO: This!
-        pass
+        username = 'usertest1'
+        self.client.post('/users/signup', {
+            'username': username,
+            'email': 'test@test.com',
+            'password1': 'prueb4PRUEB4',
+            'password2': 'prueb4PRUEB4'
+        })
+        user = get_user_model().objects.get(username=username)
+        self.assertFalse(user.is_active)
+        activation_url = self.get_activation_url()
+        self.client.get(activation_url)
+        user.refresh_from_db()
+        self.assertTrue(user.is_active)
+        user.is_active = False
+        user.save()
+        self.client.get(activation_url)
+        user.refresh_from_db()
+        self.assertFalse(user.is_active)
 
     def test_non_confirmed_users_remain_inactive(self):
         """
@@ -102,23 +118,3 @@ class TestUsers(TestCase):
         })
         # self.assertRedirects(res, '/')  # FIXME: At this point the redirection is 404
         self.assertTrue(res.url, '/')
-
-    def test_inactive_users_cannot_login(self):
-        """
-        An inactive user should not be able to log in
-        """
-        username = 'usertest1'
-        password = 'prueb4PRUEB4'
-        self.client.post('/users/signup', {
-            'username': username,
-            'email': 'test@test.com',
-            'password1': password,
-            'password2': password
-        })
-        self.client.post('/users/login/', {
-            'username': username,
-            'password': password
-        })
-        user = get_user_model().objects.get(username=username)
-        # TODO: Do this!
-        # self.assertFalse(user.is_authenticated)
