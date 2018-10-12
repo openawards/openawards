@@ -7,6 +7,8 @@ from django.contrib.auth import get_user_model
 
 
 class User(AbstractUser):
+    email = models.EmailField('email address', blank=False, null=False, unique=True)
+
     def vote(self, work, award):
         if work.creator == self \
                 or Vote.objects.filter(award=award, work=work, fan=self).first() is not None\
