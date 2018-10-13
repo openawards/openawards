@@ -8,3 +8,7 @@ class EnrollNotValidException(Exception):
 
 class NotValidVoteException(Exception):
     """Raise when a vote is not-permitted"""
+
+
+class NotEnoughCreditsException(Exception):
+    """Raise when a vote cannot be done due to the lack of credits"""

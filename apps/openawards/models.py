@@ -1,11 +1,12 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from apps.openawards.lib.utils import slugify_model
-from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
+from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException, NotEnoughCreditsException
 from apps.users.models import BaseUser
 from django.contrib.auth import get_user_model
 from constance import config
 from datetime import datetime
+from django.db.models import Sum
 
 
 class User(BaseUser):
@@ -15,6 +16,10 @@ class User(BaseUser):
                 or work not in award.works.all()\
                 or not award.active:
             raise NotValidVoteException
+
+        if self.remain_credits <= 0:
+            raise NotEnoughCreditsException
+
         Vote(award=award, work=work, fan=self).save()
 
     @classmethod
@@ -26,6 +31,12 @@ class User(BaseUser):
                 acquired_on=datetime.now(),
                 user=sender
             )
+
+    @property
+    def remain_credits(self):
+        total_credits = self.credits.objects.aggregate(Sum('quantity'))
+        given_votes = self.votes.objects.count()
+        return total_credits - given_votes
 
 
 class CreditAcquisition(models.Model):
