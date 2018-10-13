@@ -5,7 +5,7 @@ from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteExce
 from apps.users.models import BaseUser
 from django.contrib.auth import get_user_model
 from constance import config
-from datetime import datetime
+from django.utils import timezone
 from django.db.models import Sum
 
 
@@ -28,14 +28,14 @@ class User(BaseUser):
             CreditAcquisition(
                 quantity=config.CREDITS_WHEN_CREATED,
                 source='C',
-                acquired_on=datetime.now(),
-                user=sender
-            )
+                acquired_on=timezone.now(),
+                acquired_by=kwargs['instance']
+            ).save()
 
     @property
     def remain_credits(self):
-        total_credits = self.credits.objects.aggregate(Sum('quantity'))
-        given_votes = self.votes.objects.count()
+        total_credits = self.credits.aggregate(Sum('quantity'))['quantity__sum']
+        given_votes = self.votes.count()
         return total_credits - given_votes
 
 
@@ -48,7 +48,7 @@ class CreditAcquisition(models.Model):
     quantity = models.IntegerField()
     source = models.CharField(max_length=1, choices=SOURCES)
     acquired_on = models.DateTimeField(null=False, blank=False)
-    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='credits')
+    acquired_by = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='credits')
     # Creator and reference fields are for credit added by admin and for credit added by money platform
     creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     reference = models.CharField(max_length=200, blank=False, unique=True)

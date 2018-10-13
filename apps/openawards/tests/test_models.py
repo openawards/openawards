@@ -64,7 +64,7 @@ class TestModels(TestCase):
         work = fixtures.WorkFactory()
         award.enroll_work(work)
         user.vote(work, award)
-        self.assertEqual(work.vote_set.count(), 1)
+        self.assertEqual(work.votes.count(), 1)
 
     def test_unable_to_vote_not_rolled_work(self):
         """
@@ -122,4 +122,4 @@ class TestModels(TestCase):
         award2.enroll_work(work)
         user.vote(work, award1)
         user.vote(work, award2)
-        self.assertEqual(work.vote_set.count(), 2)
+        self.assertEqual(work.votes.count(), 2)

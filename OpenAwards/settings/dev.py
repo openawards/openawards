@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.openawards.apps.OpenAwardsConfig',
-    'constance'
+    'constance.backends.database'
 ]
 
 MIDDLEWARE = [
@@ -136,6 +136,8 @@ AUTH_USER_MODEL = 'openawards.User'
 DEV_SETTINGS_MODULE = 'OpenAwards.settings.dev'
 USER_FIXTURE_FACTORY_CLASS = 'openawards.tests.fixtures.UserFactory'
 
+# Constance
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_CONFIG = {
     'CREDITS_WHEN_CREATED': (5, 'Number of credits given to the user when they sign up')
 }
