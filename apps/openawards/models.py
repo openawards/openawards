@@ -4,6 +4,8 @@ from apps.openawards.lib.utils import slugify_model
 from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
 from apps.users.models import BaseUser
 from django.contrib.auth import get_user_model
+from constance import config
+from datetime import datetime
 
 
 class User(BaseUser):
@@ -17,12 +19,21 @@ class User(BaseUser):
 
     @classmethod
     def post_save(cls, sender, **kwargs):
-        if kwargs['created']:
-            pass
+        if kwargs['created'] and config.CREDITS_WHEN_CREATED > 0:
+            CreditAcquisition(
+                quantity=config.CREDITS_WHEN_CREATED,
+                source='C',
+                acquired_on=datetime.now(),
+                user=sender
+            )
 
 
 class CreditAcquisition(models.Model):
-    SOURCES = (('C', 'Creation'), ('A', 'Admin'), ('P', 'PayPal'))
+    SOURCES = (
+        ('C', 'Creation'),      # When user is created
+        ('A', 'Admin'),         # When an admin adds credits
+        ('P', 'PayPal')         # When the user adds credits by PayPal platform
+    )
     quantity = models.IntegerField()
     source = models.CharField(max_length=1, choices=SOURCES)
     acquired_on = models.DateTimeField(null=False, blank=False)
