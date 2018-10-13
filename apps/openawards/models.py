@@ -34,7 +34,8 @@ class User(BaseUser):
 
     @property
     def remain_credits(self):
-        total_credits = self.credits.aggregate(Sum('quantity'))['quantity__sum']
+        _v = self.credits.aggregate(Sum('quantity'))['quantity__sum']
+        total_credits = 0 if _v is None else _v
         given_votes = self.votes.count()
         return total_credits - given_votes
 

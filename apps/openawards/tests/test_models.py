@@ -1,6 +1,7 @@
 from django.test import TestCase
-from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
+from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException, NotEnoughCreditsException
 import apps.openawards.tests.fixtures as fixtures
+from django.apps import apps
 
 
 class TestModels(TestCase):
@@ -123,3 +124,46 @@ class TestModels(TestCase):
         user.vote(work, award1)
         user.vote(work, award2)
         self.assertEqual(work.votes.count(), 2)
+
+    def test_credits_are_subtracted_when_voting(self):
+        """
+        When a user votes that takes credits from their credit account
+        """
+        user = fixtures.UserFactory()
+        begin_with_credits = user.remain_credits
+        award1, award2 = fixtures.AwardFactory.create_batch(2)
+        work = fixtures.WorkFactory()
+        award1.enroll_work(work)
+        award2.enroll_work(work)
+        user.vote(work, award1)
+        user.vote(work, award2)
+        current_credits = user.remain_credits
+        self.assertEqual(current_credits, begin_with_credits - 2)
+
+    def test_user_without_credit_objects_cannot_vote(self):
+        """
+        When a user does not have credits related cannot vote
+        """
+        user = fixtures.UserFactory()
+        award = fixtures.AwardFactory()
+        work = fixtures.WorkFactory()
+        apps.get_model('openawards', 'CreditAcquisition').objects.filter(acquired_by=user).delete()
+        award.enroll_work(work)
+        with self.assertRaises(NotEnoughCreditsException):
+            user.vote(work, award)
+
+    def test_user_with_no_credits_cannot_vote(self):
+        """
+        When a user has spent all their credits cannot vote
+        """
+        user = fixtures.UserFactory()
+        begin_with_credits = user.remain_credits
+        award = fixtures.AwardFactory()
+        for _ in range(begin_with_credits):
+            work = fixtures.WorkFactory()
+            award.enroll_work(work)
+            user.vote(work, award)
+        work = fixtures.WorkFactory()
+        award.enroll_work(work)
+        with self.assertRaises(NotEnoughCreditsException):
+            user.vote(work, award)
