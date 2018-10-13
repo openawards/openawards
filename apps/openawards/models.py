@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_init
 from apps.openawards.lib.utils import slugify_model
 from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException, NotEnoughCreditsException
 from apps.users.models import BaseUser
@@ -23,13 +23,12 @@ class User(BaseUser):
         Vote(award=award, work=work, fan=self).save()
 
     @classmethod
-    def post_save(cls, sender, **kwargs):
+    def post_save(cls, sender, instance, **kwargs):
         if kwargs['created'] and config.CREDITS_WHEN_CREATED > 0:
             CreditAcquisition(
                 quantity=config.CREDITS_WHEN_CREATED,
-                source='C',
                 acquired_on=timezone.now(),
-                acquired_by=kwargs['instance']
+                acquired_by=instance
             ).save()
 
     @property
@@ -47,12 +46,25 @@ class CreditAcquisition(models.Model):
         ('P', 'PayPal')         # When the user adds credits by PayPal platform
     )
     quantity = models.IntegerField()
-    source = models.CharField(max_length=1, choices=SOURCES)
+    source = models.CharField(max_length=1, choices=SOURCES, default='C')
     acquired_on = models.DateTimeField(null=False, blank=False)
     acquired_by = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='credits')
-    # Creator and reference fields are for credit added by admin and for credit added by money platform
-    creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+
+
+class AdminCreditAcquisition(CreditAcquisition):
+    giver = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+
+    @classmethod
+    def post_init(cls, sender, instance, **kwargs):
+        instance.source = 'A'
+
+
+class PayPalCreditAcquisition(CreditAcquisition):
     reference = models.CharField(max_length=200, blank=False, unique=True)
+
+    @classmethod
+    def post_init(cls, sender, instance, **kwargs):
+        instance.source = 'P'
 
 
 class License(models.Model):
@@ -113,3 +125,5 @@ class Vote(models.Model):
 pre_save.connect(Award.pre_save, sender=Award)
 pre_save.connect(Work.pre_save, sender=Work)
 post_save.connect(User.post_save, sender=User)
+post_init.connect(PayPalCreditAcquisition.post_init, sender=PayPalCreditAcquisition)
+post_init.connect(AdminCreditAcquisition.post_init, sender=AdminCreditAcquisition)
