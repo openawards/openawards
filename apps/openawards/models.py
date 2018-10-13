@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from apps.openawards.lib.utils import slugify_model
 from apps.openawards.exceptions import EnrollNotValidException, NotValidVoteException
 from apps.users.models import BaseUser
@@ -14,6 +14,22 @@ class User(BaseUser):
                 or not award.active:
             raise NotValidVoteException
         Vote(award=award, work=work, fan=self).save()
+
+    @classmethod
+    def post_save(cls, sender, **kwargs):
+        if kwargs['created']:
+            pass
+
+
+class CreditAcquisition(models.Model):
+    SOURCES = (('C', 'Creation'), ('A', 'Admin'), ('P', 'PayPal'))
+    quantity = models.IntegerField()
+    source = models.CharField(max_length=1, choices=SOURCES)
+    acquired_on = models.DateTimeField(null=False, blank=False)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='credits')
+    # Creator and reference fields are for credit added by admin and for credit added by money platform
+    creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    reference = models.CharField(max_length=200, blank=False, unique=True)
 
 
 class License(models.Model):
@@ -30,8 +46,8 @@ class Work(models.Model):
     license = models.ForeignKey('License', on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     cover = models.ImageField(null=True)
-    created = models.DateField(null=True, blank=True)
-    creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    created = models.DateTimeField(null=True, blank=True)
+    creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='works')
 
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):
@@ -45,7 +61,7 @@ class Award(models.Model):
     image = models.ImageField(null=True)
     active = models.BooleanField(default=False)
     description = models.TextField()
-    works = models.ManyToManyField(Work)
+    works = models.ManyToManyField(Work, related_name='awards')
 
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):
@@ -66,10 +82,11 @@ class Award(models.Model):
 
 
 class Vote(models.Model):
-    fan = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=False)
-    work = models.ForeignKey('Work', on_delete=models.CASCADE, null=False)
+    fan = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=False, related_name='votes')
+    work = models.ForeignKey('Work', on_delete=models.CASCADE, null=False, related_name='votes')
     award = models.ForeignKey('Award', on_delete=models.CASCADE, null=False)
 
 
 pre_save.connect(Award.pre_save, sender=Award)
 pre_save.connect(Work.pre_save, sender=Work)
+post_save.connect(User.post_save, sender=User)
