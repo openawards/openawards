@@ -40,13 +40,13 @@ class User(BaseUser):
 
 
 class CreditAcquisition(models.Model):
-    SOURCES = (
+    CREDIT_ACQUISITION_SOURCES = (
         ('C', 'Creation'),      # When user is created
         ('A', 'Admin'),         # When an admin adds credits
         ('P', 'PayPal')         # When the user adds credits by PayPal platform
     )
     quantity = models.IntegerField()
-    source = models.CharField(max_length=1, choices=SOURCES, default='C')
+    source = models.CharField(max_length=1, choices=CREDIT_ACQUISITION_SOURCES, default='C')
     acquired_on = models.DateTimeField(null=False, blank=False)
     acquired_by = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='credits')
 
@@ -83,6 +83,7 @@ class Work(models.Model):
     cover = models.ImageField(null=True)
     created = models.DateTimeField(null=True, blank=True)
     creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='works')
+    url = models.CharField(max_length=200, blank=False, unique=True)
 
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):
@@ -97,6 +98,10 @@ class Award(models.Model):
     active = models.BooleanField(default=False)
     description = models.TextField()
     works = models.ManyToManyField(Work, related_name='awards')
+    starts_on = models.DateTimeField(null=True, blank=False)
+    ends_on = models.DateTimeField(null=True, blank=False)
+    winners = models.ManyToManyField(Work, related_name='won_at')
+    max_winners_position = models.IntegerField(default=3)
 
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):
@@ -114,6 +119,9 @@ class Award(models.Model):
             raise EnrollNotValidException()
         self.works.add(work)
         self.save()
+
+    def finish(self):
+        pass
 
 
 class Vote(models.Model):
