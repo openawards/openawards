@@ -1,7 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=K2D|Source+Sans+Pro|Montserrat");
 
+$color-1: #528564;
+$color-2: #B6D1BF;
+$color-3: gray;
+
+$content-width: 75%;
+
 $base-font: "Montserrat", sans-serif;
-$header-backcolor: #8B7C58;
 $title-font: "K2D", sans-serif;
 $subtitle-font: "Source Sans Pro", sans-serif;
 $subtitle-color: white;
@@ -16,8 +21,6 @@ body {
     width: 100%;
 }
 
-h1 {
-    font-family: $title-font;
-    color: white;
+a {
+    color: black;
 }
-

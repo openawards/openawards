@@ -5,7 +5,7 @@
 }
 
 header {
-    background-color: $header-backcolor;
+    background-color: $color-1;
     display: flex;
     justify-content: center;
     vertical-align: middle;
@@ -15,7 +15,7 @@ header {
     }
 
     .header-container {
-        width: 75%;
+        width: $content-width;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -25,7 +25,7 @@ header {
     .login-box {
         display: inline-flex;
         flex-direction: column;
-        background-color: white;
+        background-color: $color-2;
         height: 65%;
         padding: 8px;
         justify-content: center;
@@ -87,6 +87,10 @@ header {
         cursor: pointer;
         text-decoration: none;
 
+        h1 {
+            color: white;
+            font-family: $title-font;
+        }
 
         .logo-container {
             background-color: white;
@@ -102,6 +106,67 @@ header {
 
         .text {
             padding-left: 10px;
+        }
+    }
+}
+
+.menu {
+    width: 100%;
+    border-bottom: 2px solid $color-2;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+
+    ul {
+        width: $content-width;
+        padding-left: (100% - $content-width) / 2;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+
+        li {
+            list-style: none;
+
+            a {
+                font-family: $subtitle-font;
+                text-decoration: none;
+                font-weight: bold;
+                color: $color-1;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.content {
+    min-height: 100vh;
+    width: 100%;
+}
+
+footer {
+    width: 100%;
+    font-size: 0.75rem;
+    margin: 10px 0;
+
+    div {
+        text-align: center;
+        color: $color-3;
+
+        a {
+            color: $color-3;
+        }
+    }
+
+    .dev-by {
+        color: $color-1;
+
+        a {
+            color: $color-1;
         }
     }
 }

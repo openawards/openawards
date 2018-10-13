@@ -9,9 +9,8 @@ body {
   width: 100%;
 }
 
-h1 {
-  font-family: "K2D", sans-serif;
-  color: white;
+a {
+  color: black;
 }
 
 .subtitle {
@@ -21,7 +20,7 @@ h1 {
 }
 
 header {
-  background-color: #8B7C58;
+  background-color: #528564;
   display: flex;
   justify-content: center;
   vertical-align: middle;
@@ -39,7 +38,7 @@ header .header-container {
 header .login-box {
   display: inline-flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #B6D1BF;
   height: 65%;
   padding: 8px;
   justify-content: center;
@@ -85,6 +84,10 @@ header .title {
   cursor: pointer;
   text-decoration: none;
 }
+header .title h1 {
+  color: white;
+  font-family: "K2D", sans-serif;
+}
 header .title .logo-container {
   background-color: white;
   border-radius: 50%;
@@ -97,6 +100,77 @@ header .title .logo-container .logo {
 }
 header .title .text {
   padding-left: 10px;
+}
+
+.menu {
+  width: 100%;
+  border-bottom: 2px solid #B6D1BF;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.menu ul {
+  width: 75%;
+  padding-left: 12.5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+}
+.menu ul li {
+  list-style: none;
+}
+.menu ul li a {
+  font-family: "Source Sans Pro", sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  color: #528564;
+}
+.menu ul li a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  min-height: 100vh;
+  width: 100%;
+}
+
+footer {
+  width: 100%;
+  font-size: 0.75rem;
+  margin: 10px 0;
+}
+footer div {
+  text-align: center;
+  color: gray;
+}
+footer div a {
+  color: gray;
+}
+footer .dev-by {
+  color: #528564;
+}
+footer .dev-by a {
+  color: #528564;
+}
+
+.generic {
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.generic .generic-content {
+  width: 33%;
+}
+.generic .generic-content h1 {
+  font-size: 1.75em;
+  padding: 10px 0;
+}
+.generic .generic-content p {
+  padding: 10px 0;
 }
 
 /*# sourceMappingURL=stylesheet.css.map */

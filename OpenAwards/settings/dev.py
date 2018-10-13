@@ -139,5 +139,6 @@ USER_FIXTURE_FACTORY_CLASS = 'openawards.tests.fixtures.UserFactory'
 # Constance
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_CONFIG = {
-    'CREDITS_WHEN_CREATED': (5, 'Number of credits given to the user when they sign up')
+    'CREDITS_WHEN_CREATED': (5, 'Number of credits given to the user when they sign up'),
+    'ETIQUETTE_TEXT': ('# Etiquette!', 'Markdown text for etiquette page')
 }

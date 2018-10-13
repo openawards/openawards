@@ -59,8 +59,26 @@
       {% endblock %}
     </div>
   </header>
+  <div class="menu">
+    <ul>
+      <li><a href="{% url 'works_list' %}">Works list</a></li>
+      <li><a href="{% url 'past_awards' %}">Past awards</a></li>
+      <li><a href="{% url 'etiquette' %}">Etiquette</a></li>
+      <li><a href="https://openawards.org/en/">Blog</a></li>
+    </ul>
+  </div>
+  <div class="content">
   {% block content %}
     NO OVERRIDE
   {% endblock %}
+  </div>
+  <footer>
+    <div>
+      This web site is available under the <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.  By using this site, you agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+    </div>
+    <div class="dev-by">
+      Proudly developed by <a href="https://codi.coop">codi.coop</a>
+    </div>
+  </footer>
   </body>
 </html>

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.views import generic
 from django.apps import apps
+from constance import config
+import markdown
 
 
 def home_page(request):
@@ -29,3 +31,21 @@ class WorkDetailView(generic.DetailView):
 
 class UserDetailView(generic.DetailView):
     model = apps.get_model('openawards', 'User')
+
+
+class PastAwardsListView(generic.ListView):
+    model = apps.get_model('openawards', 'Award')
+
+
+class WorksListView(generic.ListView):
+    model = apps.get_model('openawards', 'Work')
+    template_name = 'work_list.html'
+
+
+class EtiquetteView(generic.base.TemplateView):
+    template_name = "openawards/etiquette.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['etiquette'] = markdown.markdown(config.ETIQUETTE_TEXT)
+        return context

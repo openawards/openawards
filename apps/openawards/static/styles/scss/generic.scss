@@ -1,0 +1,24 @@
+.generic {
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    .generic-content {
+        width: 33%;
+
+        h1 {
+            font-size: 1.75em;
+            padding: 10px 0;
+        }
+
+        p {
+            padding: 10px 0;
+        }
+
+        input[type=text] {
+        }
+    }
+}
