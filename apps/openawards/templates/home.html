@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {{ user.get_username }}
+    <br>
+    <a href="{% url 'logout' %}">Sign up</a>
+{% else %}
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type='submit' value='login'>
+    </form>
+    <a href="{% url 'signup' %}">Sign up</a>
+    <br>
+    <a href="{% url 'password_reset' %}">Reset password</a>
+{% endif %}
+
+
+{% endblock %}

@@ -23,4 +23,5 @@ urlpatterns = [
 # APPS
 urlpatterns += [
     path('', include('users.urls')),
+    path('', include('openawards.urls'))
 ]
