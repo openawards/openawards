@@ -7,14 +7,58 @@
     <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>title</title>
+  <title>Open Awards</title>
   <meta name="author" content="name">
   <meta name="description" content="description here">
   <meta name="keywords" content="keywords,here">
-  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
-  <link rel="stylesheet" href="stylesheet.css" type="text/css">
+  {% load static %}
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/vnd.microsoft.icon">
+  <link rel="stylesheet" href="{% static 'styles/stylesheet.css' %}" type="text/css">
   </head>
   <body>
+  <header>
+    <div class="header-container">
+      <a href="{% url 'home' %}">
+        <div class="title">
+          <div class="logo-container">
+            <img src="{% static 'images/logo.png' %}" class="logo">
+          </div>
+          <div class="text">
+            <h1>Open Awards</h1>
+            <p class="subtitle">Give back to those who share</p>
+          </div>
+        </div>
+      </a>
+
+      {% block loginbox %}
+        {% if user.is_authenticated %}
+          {{ user.get_username }}
+          <br>
+          <a href="{% url 'logout' %}">Log out</a>
+          <br>
+          <a href="{% url 'profile' user.get_username %}">My profile</a>
+        {% else %}
+        <div class="login-box">
+          <div class="login-form">
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type='submit' value='login'>
+            </form>
+          </div>
+          <div class="login-options">
+            <div class="login-option"></div>
+            <div class="login-option">
+              <a href="{% url 'password_reset' %}">Reset password</a>
+              <a href="{% url 'signup' %}">Sign up</a>
+            </div>
+          </div>
+          </div>
+        {% endif %}
+      {% endblock %}
+    </div>
+  </header>
   {% block content %}
     NO OVERRIDE
   {% endblock %}

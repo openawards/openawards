@@ -1,0 +1,107 @@
+.subtitle {
+    font-family: $subtitle-font;   
+    font-weight: bolder;
+    color: $subtitle-color;
+}
+
+header {
+    background-color: $header-backcolor;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+
+    a {
+        text-decoration: none;
+    }
+
+    .header-container {
+        width: 75%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .login-box {
+        display: inline-flex;
+        flex-direction: column;
+        background-color: white;
+        height: 65%;
+        padding: 8px;
+        justify-content: center;
+
+        .login-form {
+            margin-bottom: 5px;
+
+            form {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: space-between;
+            }
+        }
+
+        .login-options {
+            display: flex;
+            flex-direction: row;
+
+            .login-option {
+                display: flex;
+                justify-content: right;
+                width: 50%;
+                flex-direction: column;
+                height: 100%;
+                align-items: flex-end;
+            }
+        }
+
+        %inputs {
+            width: 45%;
+            border: solid 1px black;
+            border-radius: 5%;
+        }
+
+        input {
+            margin: 0 3px;
+        }
+        
+        input[type=text] {
+            @extend %inputs;
+        }
+
+        input[type=password] {
+            @extend %inputs;
+        }
+
+        a {
+            color: black;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+    }
+
+    .title {
+        display: inline-flex;
+        flex-direction: row;
+        padding: 10px;
+        cursor: pointer;
+        text-decoration: none;
+
+
+        .logo-container {
+            background-color: white;
+            border-radius: 50%;
+            width: 75px;
+            height: 75px;
+
+            .logo {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        .text {
+            padding-left: 10px;
+        }
+    }
+}

@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css?family=K2D|Source+Sans+Pro|Montserrat");
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  width: 100%;
+}
+
+h1 {
+  font-family: "K2D", sans-serif;
+  color: white;
+}
+
+.subtitle {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: bolder;
+  color: white;
+}
+
+header {
+  background-color: #8B7C58;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+}
+header a {
+  text-decoration: none;
+}
+header .header-container {
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+header .login-box {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: white;
+  height: 65%;
+  padding: 8px;
+  justify-content: center;
+}
+header .login-box .login-form {
+  margin-bottom: 5px;
+}
+header .login-box .login-form form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+header .login-box .login-options {
+  display: flex;
+  flex-direction: row;
+}
+header .login-box .login-options .login-option {
+  display: flex;
+  justify-content: right;
+  width: 50%;
+  flex-direction: column;
+  height: 100%;
+  align-items: flex-end;
+}
+header .login-box input[type=password], header .login-box input[type=text] {
+  width: 45%;
+  border: solid 1px black;
+  border-radius: 5%;
+}
+header .login-box input {
+  margin: 0 3px;
+}
+header .login-box a {
+  color: black;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+header .title {
+  display: inline-flex;
+  flex-direction: row;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+header .title .logo-container {
+  background-color: white;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+}
+header .title .logo-container .logo {
+  width: 75px;
+  height: 75px;
+}
+header .title .text {
+  padding-left: 10px;
+}
+
+/*# sourceMappingURL=stylesheet.css.map */

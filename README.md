@@ -26,3 +26,5 @@ python3 manage.py migrate
 ```
 
 `$ python manage runserver`
+
+`$ sass main.scss > ../stylesheet.css`
