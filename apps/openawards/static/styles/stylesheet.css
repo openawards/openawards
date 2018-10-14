@@ -170,6 +170,10 @@ header .title .text {
   min-height: 100vh;
   width: 100%;
   padding-top: 20px;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
 }
 
 footer {
@@ -211,6 +215,53 @@ footer .dev-by a {
 }
 .generic .generic-content p {
   padding: 10px 0;
+}
+.user-data {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
+
+.column-data {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.column-data img {
+  width: 75%;
+  margin: 0 auto;
+  border-radius: 5%;
+  margin-bottom: 20px;
+}
+.column-data .realname {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.column-data .username {
+  margin-top: 5px;
+  color: gray;
+}
+.column-data .credits {
+  width: 100%;
+  background-color: #e9e9e9;
+  margin-top: 20px;
+  border-radius: 5%;
+}
+.column-data .credits span {
+  display: block;
+}
+.column-data .credits .number {
+  font-size: 5rem;
+  background-color: #528564;
+  border-radius: 50%;
+  color: white;
+}
+
+.column-works {
+  width: 85%;
 }
 
 /*# sourceMappingURL=stylesheet.css.map */

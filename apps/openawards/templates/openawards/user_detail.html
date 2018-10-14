@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 
-{% block head %}
-
-{% endblock %}
-
 {% block content %}
-
-{% endblock %}
-
-{% block pre_footer %}
-    {% load static %}
-    <script src="https://unpkg.com/vue"></script>
-    <script src="{% static 'js/user-component.js' %}"></script>
+    <div class="user-data">
+        {% if object.username == user.username %}
+        {% endif %}
+        <div class="column-data">
+            <img src="https://avatars3.githubusercontent.com/u/52430?s=400&v=4">
+            <div>
+                <span class="realname">{{ object.first_name }} {{object.second_name}}</span>
+                <span class="username">{{ object.username }}</span>
+                {% if object.username == user.username %}
+                <div class="credits">
+                    <span class="number">{{ object.remain_credits }}</span>
+                    <span>credits</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="column-works">
+            b
+        </div>
+    </div>
 {% endblock %}

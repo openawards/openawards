@@ -24,11 +24,26 @@ class WorkDetailView(generic.DetailView):
     model = apps.get_model('openawards', 'Work')
 
 
-class UserDetailView(generic.DetailView):
+class ProfileDetailView(generic.DetailView):
     model = apps.get_model('openawards', 'User')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
     def get_object(self):
+        if not self.kwargs.get('username', None):
+            return self.request.user
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username', ''))
+
+
+class AccountDetailView(ProfileDetailView):
+    pass
+
+
+class HistoricDetailView(ProfileDetailView):
+    pass
 
 
 class PastAwardsListView(generic.ListView):
