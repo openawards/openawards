@@ -1,18 +1,13 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.apps import apps
 from constance import config
+from django.contrib.auth import get_user_model
 import markdown
 
 
-def home_page(request):
-    form = AuthenticationForm()
-    return render(request, 'home.html', {'form': form})
-
-
 class HomeView(generic.base.TemplateView):
-    template_name = "home.html"
+    template_name = "openawards/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,6 +26,9 @@ class WorkDetailView(generic.DetailView):
 
 class UserDetailView(generic.DetailView):
     model = apps.get_model('openawards', 'User')
+
+    def get_object(self):
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username', ''))
 
 
 class PastAwardsListView(generic.ListView):

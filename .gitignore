@@ -4,3 +4,4 @@ env
 venv
 .idea/
 **.css.map
+node_modules
