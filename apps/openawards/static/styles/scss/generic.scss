@@ -7,7 +7,10 @@
     align-items: center;
 
     .generic-content {
-        width: 33%;
+        width: 35%;
+        background-color: $color-4;
+        padding: 15px 20px;
+        box-shadow: 0 0 4px 0 rgba(0,0,0,.8);
 
         h1 {
             font-size: 1.75em;

@@ -17,7 +17,7 @@ class User(BaseUser):
                 or not award.active:
             raise NotValidVoteException
 
-        if self.remain_credits <= 0:
+        if not self.has_credits:
             raise NotEnoughCreditsException
 
         Vote(award=award, work=work, fan=self).save()
@@ -37,6 +37,10 @@ class User(BaseUser):
         total_credits = 0 if _v is None else _v
         given_votes = self.votes.count()
         return total_credits - given_votes
+
+    @property
+    def has_credits(self):
+        return self.remain_credits > 0
 
 
 class CreditAcquisition(models.Model):

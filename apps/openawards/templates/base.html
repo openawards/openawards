@@ -67,6 +67,22 @@
       <li><a href="https://openawards.org/en/">Blog</a></li>
     </ul>
   </div>
+  {% block get_credits %}
+  {% if not user.is_authenticated or not user.has_credits %}
+  <div class="get-credits-container">
+    <p>Vote for your favorite works</p>
+    {% if not user.is_authenticated %}
+    <a href="{% url 'login' %}">
+    {% else %}
+    <a href="#">
+    {% endif %}
+    <div>
+      Get Credits Now
+    </div>
+    </a>
+  </div>
+  {% endif %}
+  {% endblock %}
   <div class="content">
   {% block content %}
     NO OVERRIDE
