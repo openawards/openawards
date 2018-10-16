@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block get_credits %}{% endblock %}
+
 {% block content %}
     <div class="user-data">
         {% if object.username == user.username %}
@@ -9,16 +11,39 @@
             <div>
                 <span class="realname">{{ object.first_name }} {{object.second_name}}</span>
                 <span class="username">{{ object.username }}</span>
+                {% block left_bar %}
                 {% if object.username == user.username %}
                 <div class="credits">
                     <span class="number">{{ object.remain_credits }}</span>
                     <span>credits</span>
                 </div>
                 {% endif %}
+                {% endblock %}
             </div>
         </div>
-        <div class="column-works">
-            b
+        <div class="user-content">
+            {% block user_content %}
+            <div class="user-content-header">
+                <h2>Works</h2>
+                {% if object.username == user.username %}
+                <a href="{% url 'new_work' %}" class="div-button">
+                    <div>
+                    Add works
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+            <div class="works-content">
+                {% for work in object.works.objects.all %}
+                {% empty %}
+                  No works here!
+                {% endfor %}
+            </div>
+            {% endblock %}
         </div>
     </div>
+{% endblock %}
+
+{% block pre_footer %}
+
 {% endblock %}

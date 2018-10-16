@@ -3,6 +3,7 @@ from django.views import generic
 from django.apps import apps
 from constance import config
 from django.contrib.auth import get_user_model
+from .forms import WorkForm
 import markdown
 
 
@@ -20,8 +21,8 @@ class AwardDetailView(generic.DetailView):
     model = apps.get_model('openawards', 'Award')
 
 
-class WorkDetailView(generic.DetailView):
-    model = apps.get_model('openawards', 'Work')
+class AwardsListView(generic.DetailView):
+    model = apps.get_model('openawards', 'Award')
 
 
 class ProfileDetailView(generic.DetailView):
@@ -39,11 +40,13 @@ class ProfileDetailView(generic.DetailView):
 
 
 class AccountDetailView(ProfileDetailView):
-    pass
+    template_name = 'openawards/user_account.html'
+    model = apps.get_model('openawards', 'User')
 
 
-class HistoricDetailView(ProfileDetailView):
-    pass
+class HistoricView(generic.ListView):
+    template_name = 'openawards/user_historic.html'
+    model = apps.get_model('openawards', 'User')
 
 
 class PastAwardsListView(generic.ListView):
@@ -52,7 +55,7 @@ class PastAwardsListView(generic.ListView):
 
 class WorksListView(generic.ListView):
     model = apps.get_model('openawards', 'Work')
-    template_name = 'work_list.html'
+    template_name = 'openawards/work_list.html'
 
 
 class EtiquetteView(generic.base.TemplateView):
@@ -62,3 +65,14 @@ class EtiquetteView(generic.base.TemplateView):
         context = super().get_context_data(**kwargs)
         context['etiquette'] = markdown.markdown(config.ETIQUETTE_TEXT)
         return context
+
+
+class WorkDetailView(generic.DetailView):
+    model = apps.get_model('openawards', 'Work')
+
+
+class NewWorkDetailView(generic.CreateView):
+    model = apps.get_model('openawards', 'Work')
+    form_class = WorkForm
+    template_name = 'openawards/work.html'
+

@@ -14,7 +14,7 @@
   {% load static %}
   <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/vnd.microsoft.icon">
   <link rel="stylesheet" href="{% static 'styles/stylesheet.css' %}" type="text/css">
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   {% block head %}{% endblock %}
   </head>
   <body>
@@ -34,11 +34,25 @@
 
       {% block loginbox %}
         {% if user.is_authenticated %}
-          {{ user.get_username }}
-          <br>
-          <a href="{% url 'logout' %}">Log out</a>
-          <br>
-          <a href="{% url 'profile' user.get_username %}">My profile</a>
+        <div>
+          <a href="#" onclick="document.getElementsByClassName('user-menu')[0].style.visibility = (document.getElementsByClassName('user-menu')[0].style.visibility === 'hidden') ? 'visible' : 'hidden';">
+          <div class="user-menu-button">
+              <img src="https://avatars3.githubusercontent.com/u/52430?s=400&v=4">
+              <div>
+                <span>{{ user.get_username }}</span>
+                <br />
+                <span class="little-text">{{ user.remain_credits }} credits - 0 votes given</span>
+              </div>
+          </div>
+          </a>
+          <div id="user-menu" class="user-menu" style="visibility: hidden;">
+            <a href="{% url 'my_profile' %}">My profile</a>
+            <a href="{% url 'account' %}">Edit my account</a>
+            <a href="{% url 'historic' %}">My history</a>
+            <a href="#">Admin</a>
+            <a href="{% url 'logout' %}">Log out</a>
+          </div>
+        </div>
         {% else %}
         <div class="login-box">
           <div class="login-form">
@@ -63,8 +77,9 @@
   </header>
   <div class="menu">
     <ul>
-      <li><a href="{% url 'works_list' %}">Works list</a></li>
+      <li><a href="{% url 'home' %}">Current awards</a></li>
       <li><a href="{% url 'past_awards' %}">Past awards</a></li>
+      <li><a href="{% url 'works_list' %}">Works list</a></li>
       <li><a href="{% url 'etiquette' %}">Etiquette</a></li>
       <li><a href="https://openawards.org/en/">Blog</a></li>
     </ul>
@@ -74,9 +89,9 @@
   <div class="get-credits-container">
     <p>Vote for your favorite works</p>
     {% if not user.is_authenticated %}
-    <a href="{% url 'login' %}">
+    <a href="{% url 'login' %}" class="div-button">
     {% else %}
-    <a href="#">
+    <a href="#" class="div-button">
     {% endif %}
     <div>
       Get Credits Now
@@ -92,6 +107,15 @@
   </div>
   {% block pre_footer %}
   {% endblock %}
+
+  <script>
+    $( document ).ready(function() {
+      $( "#user-menu" ).mouseleave(function() {
+        document.getElementsByClassName('user-menu')[0].style.visibility = 'hidden';
+      });
+    });
+  </script>
+
   <footer>
     <div>
       This web site is available under the <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.  By using this site, you agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.

@@ -8,7 +8,8 @@ $color-5: white;
 
 $text-color: #2b2b2b;
 
-$content-width: 75%;
+$header-width: 75%;
+$content-width: 55%;
 
 $base-font: "Montserrat", sans-serif;
 $title-font: "K2D", sans-serif;
@@ -28,4 +29,19 @@ body {
 
 a {
     color: $text-color;
+}
+
+.div-button {
+    text-decoration: none;
+
+    div {
+        padding: 10px 30px;
+        background-color: $color-1;
+        font-weight: bold;
+        color: $color-5;
+
+        &:hover {
+            background-color: $color-3;
+        }
+    }
 }
