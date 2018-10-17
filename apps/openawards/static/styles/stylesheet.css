@@ -43,6 +43,10 @@ a {
   background-color: gray;
 }
 
+.hidden {
+  display: none;
+}
+
 .subtitle {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: bolder;
@@ -176,10 +180,16 @@ header .title .text {
   align-items: center;
   justify-content: space-between;
 }
-.user-menu-button img {
+.user-menu-button .avatar-img {
   width: 35px;
   border-radius: 50%;
   border: 5px solid #528564;
+  padding: 0;
+  margin: 0;
+}
+.user-menu-button svg {
+  width: 35px;
+  height: 35px;
 }
 .user-menu-button span {
   color: white;

@@ -161,10 +161,17 @@ header {
     align-items: center;
     justify-content: space-between;
 
-    img {
+    .avatar-img {
         width: 35px;
         border-radius: 50%;
         border: 5px solid $color-1;
+        padding: 0;
+        margin: 0;
+    }
+
+    svg {
+        width: 35px;
+        height: 35px;
     }
 
     span {

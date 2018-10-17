@@ -36,7 +36,10 @@
         var getImgButton = $('#change-image-btn');
         var fileField = $('#avatar');
         var profileImage = $('#avatar-img');
-        imageControl(getImgButton, fileField, profileImage);
+        imageControl(getImgButton, fileField, profileImage, function () {
+            $('#avatar-img').removeClass("hidden");
+            $('#avatar-svg').addClass("hidden");
+        });
     });
 </script>
 </form>
