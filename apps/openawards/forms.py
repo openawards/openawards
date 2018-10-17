@@ -9,3 +9,9 @@ class WorkForm(forms.ModelForm):
     class Meta:
         model = apps.get_model('openawards', 'Work')
         fields = ()
+
+
+class UserAccountForm(forms.ModelForm):
+    class Meta:
+        model = apps.get_model('openawards', 'User')
+        fields = ('avatar',)

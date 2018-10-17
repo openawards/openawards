@@ -10,6 +10,8 @@ from django.db.models import Sum
 
 
 class User(BaseUser):
+    avatar = models.ImageField(null=True)
+
     def vote(self, work, award):
         if work.creator == self \
                 or Vote.objects.filter(award=award, work=work, fan=self).first() is not None\
