@@ -130,6 +130,7 @@ STATIC_URL = '/static/'
 
 
 # APPS
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTH_USER_MODEL = 'openawards.User'

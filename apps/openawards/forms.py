@@ -3,6 +3,7 @@
 
 from django import forms
 from django.apps import apps
+from .lib.form_fields import ExtendedImageField
 
 
 class WorkForm(forms.ModelForm):
@@ -15,5 +16,6 @@ class UserAccountForm(forms.ModelForm):
     class Meta:
         model = apps.get_model('openawards', 'User')
         fields = ('avatar',)
-    avatar = forms.ImageField()
+
+    avatar = ExtendedImageField()
 

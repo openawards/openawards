@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
+from django.conf import settings
+from django.views.generic.base import RedirectView
+
 
 urlpatterns = [
+    url('admin/login', RedirectView.as_view(pattern_name=settings.LOGIN_URL, permanent=True, query_string=True)),
     path('admin/', admin.site.urls),
 ]
-
 # APPS
 urlpatterns += [
     path('', include('users.urls')),
