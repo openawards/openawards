@@ -15,7 +15,7 @@ class WorkForm(forms.ModelForm):
 class UserAccountForm(forms.ModelForm):
     class Meta:
         model = apps.get_model('openawards', 'User')
-        fields = ('avatar',)
+        fields = ('avatar', 'first_name', 'last_name')
 
     avatar = ExtendedImageField()
 

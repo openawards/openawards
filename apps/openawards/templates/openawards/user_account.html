@@ -22,6 +22,11 @@
 {% block user_content %}
 <h2>User account</h2>
 
+<label for="first_name">First name</label>
+<input type="text" name="first_name" id="first_name" value="{{ user.first_name }}"><br>
+<label for="last_name">Last name</label>
+<input type="text" name="last_name" id="last_name" value="{{ user.last_name }}"><br>
+
 <a href="#" class="div-button" onclick="$('#user-form').submit();">
     <div>
       Save changes
