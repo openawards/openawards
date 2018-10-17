@@ -46,11 +46,18 @@
           </div>
           </a>
           <div id="user-menu" class="user-menu" style="visibility: hidden;">
-            <a href="{% url 'my_profile' %}">My profile</a>
-            <a href="{% url 'account' %}">Edit my account</a>
-            <a href="{% url 'historic' %}">My history</a>
-            <a href="#">Admin</a>
-            <a href="{% url 'logout' %}">Log out</a>
+            <div class="user-menu-decoration">
+              <svg height="10" width="20">
+                <polygon points="10,0 0,10 20,10"/> <!-- style="fill:lime;stroke:purple;stroke-width:1" -->
+              </svg>
+            </div>
+            <div class="user-menu-list">
+              <a href="{% url 'my_profile' %}">My profile</a>
+              <a href="{% url 'account' %}">Edit my account</a>
+              <a href="{% url 'historic' %}">My history</a>
+              <a href="#">Admin</a>
+              <a href="{% url 'logout' %}">Log out</a>
+            </div>
           </div>
         </div>
         {% else %}

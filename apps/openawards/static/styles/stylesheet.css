@@ -175,15 +175,26 @@ header .title .text {
 }
 
 .user-menu {
-  background-color: white;
-  border-radius: 4px;
-  border: 3px solid #528564;
   position: absolute;
+  width: 200px;
+}
+.user-menu .user-menu-decoration {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.user-menu .user-menu-decoration svg {
+  fill: #528564;
+}
+.user-menu .user-menu-list {
+  border-radius: 4px;
+  background-color: white;
   width: 200px;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+  border: 3px solid #528564;
 }
 .user-menu a {
   border-top: solid 1px #e9e9e9;
