@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.openawards.apps.OpenAwardsConfig',
-    'constance.backends.database'
+    'constance.backends.database',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,14 @@ CONSTANCE_CONFIG = {
     'CREDITS_WHEN_CREATED': (5, 'Number of credits given to the user when they sign up'),
     'ETIQUETTE_TEXT': ('# Etiquette!', 'Markdown text for etiquette page')
 }
+
+# Storage Service
+
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = 'codi.coop.test'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.wasabisys.com'
+AWS_S3_ENDPOINT_URL = 'https://s3.wasabisys.com'
+AWS_DEFAULT_ACL = 'public-read'
+DEFAULT_FILE_STORAGE = 'apps.openawards.lib.storages.MediaStorage'
+EXTERNAL_MEDIA_PATH = 'openawards/media'

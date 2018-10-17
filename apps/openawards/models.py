@@ -9,8 +9,14 @@ from django.utils import timezone
 from django.db.models import Sum
 
 
+def lazy_upload_to(str_to_format):
+    def path_to_upload(instance, filename):
+        return str_to_format.format(instance.id, filename)
+    return path_to_upload
+
+
 class User(BaseUser):
-    avatar = models.ImageField(null=True)
+    avatar = models.ImageField(null=True, upload_to=lazy_upload_to('user.avatar/{0}/{1}'))
 
     def vote(self, work, award):
         if work.creator == self \
@@ -95,7 +101,7 @@ class Work(models.Model):
     slug = models.CharField(max_length=100, unique=True)
     license = models.ForeignKey('License', on_delete=models.SET_NULL, null=True)
     description = models.TextField()
-    cover = models.ImageField(null=True)
+    cover = models.ImageField(null=True, upload_to=lazy_upload_to('work.cover/{0}/{1}'))
     created = models.DateTimeField(null=True, blank=True)
     creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='works')
     url = models.CharField(max_length=200, blank=False, unique=True)
@@ -109,13 +115,13 @@ class Award(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a video title", unique=True)
     slug = models.CharField(max_length=100, unique=True)
     created = models.DateField(null=True, blank=True)
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True, upload_to=lazy_upload_to('award.image/{0}/{1}'))
     active = models.BooleanField(default=False)
     description = models.TextField()
-    works = models.ManyToManyField(Work, related_name='awards')
+    works = models.ManyToManyField(Work, blank=True, related_name='awards')
     starts_on = models.DateTimeField(null=True, blank=False)
     ends_on = models.DateTimeField(null=True, blank=False)
-    winners = models.ManyToManyField(Work, related_name='won_at')
+    winners = models.ManyToManyField(Work, blank=True, related_name='won_at')
     max_winners_position = models.IntegerField(default=3)
 
     @classmethod

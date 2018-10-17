@@ -11,5 +11,9 @@ class WorkForm(forms.ModelForm):
         fields = ()
 
 
-class UserAccountForm(forms.Form):
-    avatar = forms.FileField()
+class UserAccountForm(forms.ModelForm):
+    class Meta:
+        model = apps.get_model('openawards', 'User')
+        fields = ('avatar',)
+    avatar = forms.ImageField()
+
