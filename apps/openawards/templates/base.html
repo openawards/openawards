@@ -41,7 +41,7 @@
               <div>
                 <span>{{ user.get_username }}</span>
                 <br />
-                <span class="little-text">{{ user.remain_credits }} credits - 0 votes given</span>
+                <span class="little-text">{{ user.remain_credits }} credits ─ 0 votes given</span>
               </div>
           </div>
           </a>
@@ -54,7 +54,7 @@
             <div class="user-menu-list">
               <a href="{% url 'my_profile' %}">My profile</a>
               <a href="{% url 'account' %}">Edit my account</a>
-              <a href="{% url 'historic' %}">My history</a>
+              <a href="{% url 'historic' %}">Votes history</a>
               <a href="#">Admin</a>
               <a href="{% url 'logout' %}">Log out</a>
             </div>
