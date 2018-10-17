@@ -16,4 +16,6 @@ urlpatterns = [
     path('past-awards', views.PastAwardsListView.as_view(), name='past_awards'),
     path('works-list', views.WorksListView.as_view(), name='works_list'),
     path('etiquette', views.EtiquetteView.as_view(), name='etiquette'),
+    path('credits', views.GetCreditsView.as_view(), name='credits'),
+    path('get-credits', views.AddCreditsView.as_view(), name='get_credits')
 ]

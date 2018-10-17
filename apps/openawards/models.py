@@ -42,12 +42,21 @@ class User(BaseUser):
     def has_credits(self):
         return self.remain_credits > 0
 
+    def give_credits(self, quantity, source):
+        CreditAcquisition(
+            quantity=quantity,
+            source=source,
+            acquired_on=timezone.now(),
+            acquired_by=self
+        ).save()
+
 
 class CreditAcquisition(models.Model):
     CREDIT_ACQUISITION_SOURCES = (
         ('C', 'Creation'),      # When user is created
         ('A', 'Admin'),         # When an admin adds credits
-        ('P', 'PayPal')         # When the user adds credits by PayPal platform
+        ('P', 'PayPal'),         # When the user adds credits by PayPal platform
+        ('D', 'Dev'),            # When the user get credits on development time
     )
     quantity = models.IntegerField()
     source = models.CharField(max_length=1, choices=CREDIT_ACQUISITION_SOURCES, default='C')

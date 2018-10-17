@@ -22,6 +22,7 @@ a {
   background-color: #528564;
   font-weight: bold;
   color: white;
+  display: inline;
 }
 .div-button div:hover {
   background-color: gray;
@@ -252,6 +253,14 @@ footer .dev-by {
 }
 footer .dev-by a {
   color: #528564;
+}
+
+.global-content {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
 }
 
 .generic {

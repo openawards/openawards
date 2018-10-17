@@ -39,6 +39,7 @@ a {
         background-color: $color-1;
         font-weight: bold;
         color: $color-5;
+        display: inline;
 
         &:hover {
             background-color: $color-3;

@@ -268,3 +268,11 @@ footer {
         }
     }
 }
+
+.global-content {
+    width: $content-width;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+}

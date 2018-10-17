@@ -76,3 +76,14 @@ class NewWorkDetailView(generic.CreateView):
     form_class = WorkForm
     template_name = 'openawards/work.html'
 
+
+class GetCreditsView(generic.base.TemplateView):
+    template_name = "openawards/credits.html"
+
+
+class AddCreditsView(generic.RedirectView):
+    url = 'credits'
+
+    def get(self, request, *args, **kwargs):
+        request.user.give_credits(1, 'D')
+        return super().get(request, *args, **kwargs)
