@@ -3,23 +3,23 @@
 {% block get_credits %}{% endblock %}
 
 {% block content %}
+    {% block user_begin %}{% endblock %}
     <div class="user-data">
-        {% if object.username == user.username %}
-        {% endif %}
         <div class="column-data">
-            <img src="https://avatars3.githubusercontent.com/u/52430?s=400&v=4">
-            <div>
+            <img src="https://avatars3.githubusercontent.com/u/52430?s=400&v=4" id="avatar-img">
+            {% block under-image %}{% endblock %}
+            <div class="user-panel">
                 <span class="realname">{{ object.first_name }} {{object.second_name}}</span>
                 <span class="username">{{ object.username }}</span>
-                {% block left_bar %}
-                {% if object.username == user.username %}
-                <div class="credits">
-                    <span class="number">{{ object.remain_credits }}</span>
-                    <span>credits</span>
-                </div>
-                {% endif %}
-                {% endblock %}
             </div>
+            {% block left_bar %}
+            {% if object.username == user.username %}
+            <div class="credits">
+                <span class="number">{{ object.remain_credits }}</span>
+                <span>credits</span>
+            </div>
+            {% endif %}
+            {% endblock %}
         </div>
         <div class="user-content">
             {% block user_content %}
@@ -42,6 +42,7 @@
             {% endblock %}
         </div>
     </div>
+    {% block user_end %}{% endblock %}
 {% endblock %}
 
 {% block pre_footer %}

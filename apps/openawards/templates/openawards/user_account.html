@@ -1,7 +1,29 @@
 {% extends "openawards/user_detail.html" %}
 
+{% block user_begin %}
+<form method="post">
+{% csrf_token %}
+{% endblock %}
+
+{% block under-image %}
+<div class="user-panel">
+    <a href="#" id="change-image-btn" class="div-button-little">
+        <div>
+          Change image
+        </div>
+    </a>
+    {% load static %}
+    <script src="{% static 'js/avatar.js' %}"></script>
+</div>
+{% endblock %}
+
 {% block left_bar %}{% endblock %}
 
 {% block user_content %}
 <h2>User account</h2>
+{% endblock %}
+
+{% block user_end %}
+<input type="file" id="input-field-file" name="avatar" accept="image/png, image/jpeg" style="visibility: hidden; height: 0;"/>
+</form>
 {% endblock %}

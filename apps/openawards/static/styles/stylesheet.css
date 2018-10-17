@@ -28,6 +28,21 @@ a {
   background-color: gray;
 }
 
+.div-button-little {
+  text-decoration: none;
+}
+.div-button-little div {
+  padding: 5px 5px;
+  background-color: #528564;
+  font-weight: bold;
+  color: white;
+  display: inline;
+  font-size: 0.6rem;
+}
+.div-button-little div:hover {
+  background-color: gray;
+}
+
 .subtitle {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: bolder;
@@ -302,7 +317,7 @@ footer .dev-by a {
   width: 75%;
   margin: 0 auto;
   border-radius: 5%;
-  margin-bottom: 20px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.8);
 }
 .column-data .realname {
   font-size: 1.3rem;
@@ -326,6 +341,10 @@ footer .dev-by a {
   background-color: #528564;
   border-radius: 50%;
   color: white;
+}
+
+.user-panel {
+  margin: 10px 0;
 }
 
 .user-content {
