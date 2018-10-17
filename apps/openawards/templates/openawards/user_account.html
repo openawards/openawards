@@ -1,7 +1,7 @@
 {% extends "openawards/user_detail.html" %}
 
 {% block user_begin %}
-<form method="post">
+<form method="post" id="user-form" enctype="multipart/form-data">
 {% csrf_token %}
 {% endblock %}
 
@@ -13,7 +13,7 @@
         </div>
     </a>
     {% load static %}
-    <script src="{% static 'js/avatar.js' %}"></script>
+    <script src="{% static 'js/image-control.js' %}"></script>
 </div>
 {% endblock %}
 
@@ -22,7 +22,7 @@
 {% block user_content %}
 <h2>User account</h2>
 
-<a href="#" class="div-button">
+<a href="#" class="div-button" onclick="$('#user-form').submit();">
     <div>
       Save changes
     </div>
@@ -30,6 +30,14 @@
 {% endblock %}
 
 {% block user_end %}
-<input type="file" id="input-field-file" name="avatar" accept="image/png, image/jpeg" style="visibility: hidden; height: 0;"/>
+<input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" style="visibility: hidden; height: 0;"/>
+<script>
+    $( document ).ready(function() {
+        var getImgButton = $('#change-image-btn');
+        var fileField = $('#avatar');
+        var profileImage = $('#avatar-img');
+        imageControl(getImgButton, fileField, profileImage);
+    });
+</script>
 </form>
 {% endblock %}

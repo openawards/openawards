@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .AccountDetailView import AccountDetailView
+from .AccountFormView import AccountFormView
 from .AddCreditsView import AddCreditsView
 from .AwardDetailView import AwardDetailView
 from .AwardListView import AwardsListView

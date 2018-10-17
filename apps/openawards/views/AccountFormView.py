@@ -7,10 +7,14 @@ from apps.openawards.mixins import UserViewMixin
 from ..forms import UserAccountForm
 
 
-class AccountDetailView(UserViewMixin, generic.FormView):
+class AccountFormView(UserViewMixin, generic.FormView):
     template_name = 'openawards/user_account.html'
     model = apps.get_model('openawards', 'User')
     form_class = UserAccountForm
+    success_url = 'account'
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
