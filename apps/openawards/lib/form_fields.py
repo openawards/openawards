@@ -11,21 +11,17 @@ class ExtendedImageField(forms.ImageField):
 
     def to_python(self, data):
         f = super().to_python(data)
+        byte_aray = BytesIO()
+
+        image = Image.open(f)
+        # image.show()
+        image = image.resize((200, 200))
+        image.save(byte_aray, format='PNG')
+
+        f.name = 'avatar.png'
+        f.file = byte_aray
+        f.content_type = Image.MIME.get(image.format)
+        f.image = image
         return f
-        # FIXME: This is not working, after 1h30m of trying, I failed! Next time?
-        if f is not None:
-            file = BytesIO(data.read())
-            image = Image.open(file)
-            width, height = image.size
-            min_value = min(width, height)
-            f.image = image.crop((0, 0, min_value, min_value))
-            f.image.save(f.file, format='PNG')
-            """
-            This method should be as it follows, but it gives problems:
-                image = f.image
-                width, height = image.size
-                min_value = min(width, height)
-                f.image = image.crop((0, 0, min_value, min_value))
-            """
-        return f
+
 
