@@ -22,10 +22,18 @@
 {% block user_content %}
 <h2>User account</h2>
 
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
 <label for="first_name">First name</label>
 <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}"><br>
 <label for="last_name">Last name</label>
 <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}"><br>
+<label for="new_password1">New password</label>
+<input type="password" name="new_password1" id="new_password1"><br>
+<label for="new_password2">Repeat the password</label>
+<input type="password" name="new_password2" id="new_password2"><br>
 
 <a href="#" class="div-button" onclick="$('#user-form').submit();">
     <div>
