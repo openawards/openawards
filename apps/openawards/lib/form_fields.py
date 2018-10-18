@@ -7,15 +7,19 @@ from io import BytesIO
 
 
 class ExtendedImageField(forms.ImageField):
-    # TODO: Add a constructor to this class to choose when to crop
+    def __init__(self, resize=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.resize = resize
 
     def to_python(self, data):
         f = super().to_python(data)
-        byte_aray = BytesIO()
+        if not self.resize:
+            return f
 
+        byte_aray = BytesIO()
         image = Image.open(f)
         # image.show()
-        image = image.resize((200, 200))
+        image = image.resize(self.resize)
         image.save(byte_aray, format='PNG')
 
         f.name = 'avatar.png'

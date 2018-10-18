@@ -23,7 +23,7 @@ class UserAccountForm(forms.ModelForm):
         'password_mismatch': "The two password fields didn't match."
     }
 
-    avatar = ExtendedImageField(required=False)
+    avatar = ExtendedImageField(required=False, resize=(200, 200))
     new_password1 = forms.CharField(
         label='New password',
         widget=forms.PasswordInput,
