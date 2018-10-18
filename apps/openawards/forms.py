@@ -11,7 +11,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 class WorkForm(forms.ModelForm):
     class Meta:
         model = apps.get_model('openawards', 'Work')
-        fields = ()
+        fields = ('cover', 'title', 'url', 'description', 'license')
+        cover = ExtendedImageField(required=False, resize=(500, 500))
 
 
 class UserAccountForm(forms.ModelForm):

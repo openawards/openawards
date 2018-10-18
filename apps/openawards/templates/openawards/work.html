@@ -2,4 +2,46 @@
 
 {% block content %}
 <h2>Work</h2>
+
+<form method="post">
+{% csrf_token %}
+
+<div>
+  <td>{{ form.cover.label_tag }}</td>
+  <td>
+    <img src="" id="cover-img">
+    <a href="#" id="change-image-btn" class="div-button-little">
+        <div>
+          Change image
+        </div>
+    </a>
+    <input type="file" id="cover" name="cover" accept="image/png, image/jpeg" style="display: none;"/>
+    {% load static %}
+    <script src="{% static 'js/image-control.js' %}"></script>
+  </td>
+</div>
+<div>
+  <td>{{ form.title.label_tag }}</td><td>{{ form.title }}</td>
+</div>
+<div>
+  <td>{{ form.license.label_tag }}</td><td>{{ form.license }}</td>
+</div>
+<div>
+  <td>{{ form.description.label_tag }}</td><td>{{ form.description }}</td>
+</div>
+<div>
+  <td>{{ form.url.label_tag }}</td><td>{{ form.url }}</td>
+</div>
+<div>
+  <input type="submit" value="Save work" />
+</div>
+</form>
+<script>
+    $( document ).ready(function() {
+        var getImgButton = $('#change-image-btn');
+        var fileField = $('#cover');
+        var profileImage = $('#cover-img');
+        imageControl(getImgButton, fileField, profileImage);
+    });
+</script>
 {% endblock %}
