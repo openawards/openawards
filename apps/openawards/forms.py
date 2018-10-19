@@ -6,7 +6,7 @@ from django.apps import apps
 from .lib.form_fields import ExtendedImageField
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import PasswordChangeForm
-import datetime
+from django.utils import timezone
 
 
 class WorkForm(forms.ModelForm):
@@ -22,7 +22,7 @@ class WorkForm(forms.ModelForm):
     def save(self, commit=True):
         work = super().save(commit=False)
         work.creator = self.creator
-        work.created = datetime.datetime.utcnow()
+        work.created = timezone.now()
         if commit:
             work.save()
         return work
