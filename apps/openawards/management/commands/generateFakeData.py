@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 )
             ) if use_factory else None,
             license=factory.Iterator(licenses),
-            creator=factory.Iterator(users)
+            creator=fuzzy.FuzzyChoice(users)
         )
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Works'))
         return works
@@ -121,14 +121,16 @@ class Command(BaseCommand):
                         'award': award
                     })
                     n_enrolled += 1
-        self.stdout.write(self.style.SUCCESS('%d works enrolled to corresponding awards.' % n_enrolled))
+        self.stdout.write(self.style.SUCCESS('%d works enrolled to random awards.' % n_enrolled))
         return enrolled_works
 
     def vote_works(self, users, enrolled_works):
         for user in users:
-            for ew in enrolled_works:
-                should_vote = bool(random.getrandbits(1))
-                if ew['work'].creator != user and user.has_credits and should_vote:
+            n_votes = random.randint(0, user.remain_credits)
+            n_final_credits = user.remain_credits - n_votes
+            while user.remain_credits > n_final_credits:
+                ew = random.choice(enrolled_works)
+                if ew['work'].creator != user and user.has_credits:
                     user.vote(ew['work'], ew['award'])
         self.stdout.write(self.style.SUCCESS('Users have voted.'))
 
