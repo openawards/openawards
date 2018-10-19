@@ -145,6 +145,10 @@ CONSTANCE_CONFIG = {
     'ETIQUETTE_TEXT': ('# Etiquette!', 'Markdown text for etiquette page')
 }
 
+FIXTURES_PATH_TO_COVERS = 'test-images/covers'
+FIXTURES_PATH_TO_LITTLE = 'test-images/littles'
+FIXTURES_PATH_TO_AVATARS = 'test-images/avatars'
+
 # Storage Service
 
 AWS_ACCESS_KEY_ID = ''

@@ -8,6 +8,8 @@ from django.core.management.commands.flush import Command as Flush
 from django.db import DEFAULT_DB_ALIAS
 from apps.openawards.tests.fixtures import UserFactory, WorkFactory, AwardFactory
 import lorem
+import factory
+from apps.openawards.lib.utils import storage_files
 
 
 class Command(BaseCommand):
@@ -33,22 +35,32 @@ class Command(BaseCommand):
         return licenses
 
     def create_awards(self):
+        factory_iterator = factory.Iterator(
+            storage_files(
+                settings.FIXTURES_PATH_TO_COVERS,
+                'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+            )
+        )
         awards = [
             AwardFactory(
                 name="Animated shorts award",
-                description=lorem.text()
+                description=lorem.text(),
+                image=factory_iterator
             ),
             AwardFactory(
                 name="Open Music Best Album",
-                description=lorem.text()
+                description=lorem.text(),
+                image=factory_iterator
             ),
             AwardFactory(
                 name="Fiction Novel Collective Culture Award",
-                description=lorem.text()
+                description=lorem.text(),
+                image=factory_iterator
             ),
             AwardFactory(
                 name="Essay and Academic Open Knowledge Award",
-                description=lorem.text()
+                description=lorem.text(),
+                image=factory_iterator
             )
         ]
         for award in awards:
@@ -57,12 +69,22 @@ class Command(BaseCommand):
         return awards
 
     def create_users(self):
-        users = UserFactory.create_batch(size=50)
+        users = UserFactory.create_batch(size=50, avatar=factory.Iterator(
+            storage_files(
+                settings.FIXTURES_PATH_TO_AVATARS,
+                'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+            )
+        ))
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Users'))
         return users
 
     def create_works(self):
-        works = WorkFactory.create_batch(size=100)
+        works = WorkFactory.create_batch(size=100, cover = factory.Iterator(
+            storage_files(
+                settings.FIXTURES_PATH_TO_LITTLE,
+                'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+            )
+        ))
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Works'))
         return works
 
@@ -92,6 +114,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         assert settings.DEBUG
+        settings.ADD_STORAGE_IMAGES_TO_FIXTURES = True
         Flush().handle(interactive=False, database=DEFAULT_DB_ALIAS, **options)
         self.create_licenses()
         awards = self.create_awards()
