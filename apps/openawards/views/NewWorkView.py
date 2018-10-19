@@ -14,6 +14,3 @@ class NewWorkView(generic.CreateView):
 
     def get_form(self, form_class=None):
         return self.form_class(self.request.user, **self.get_form_kwargs())
-
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
