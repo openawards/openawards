@@ -1,7 +1,7 @@
 # From: https://docs.djangoproject.com/en/2.1/howto/custom-management-commands/
 
 from django.core.management.base import BaseCommand
-from openawards.models import User, License, Work, Award, Vote
+from openawards.models import License
 import random
 from django.conf import settings
 from django.core.management.commands.flush import Command as Flush
@@ -11,6 +11,9 @@ import lorem
 import factory
 import factory.fuzzy as fuzzy
 from apps.openawards.lib.utils import storage_files
+import urllib.request as request
+from django.core.files import File
+import tempfile
 
 
 class Command(BaseCommand):
@@ -21,10 +24,10 @@ class Command(BaseCommand):
             '--test', '--test', action='store_true', dest='is-test'
         )
         parser.add_argument(
-            '--works', '--works', action='store', type=int, dest='works', default=100
+            '--works', '--works', action='store', type=int, dest='works', default=50
         )
         parser.add_argument(
-            '--users', '--users', action='store', type=int, dest='users', default=50
+            '--users', '--users', action='store', type=int, dest='users', default=25
         )
 
     def create_licenses(self):
@@ -50,7 +53,7 @@ class Command(BaseCommand):
         img = fuzzy.FuzzyChoice(
             storage_files(
                 settings.FIXTURES_PATH_TO_COVERS,
-                'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+                'http://' + settings.AWS_S3_CUSTOM_DOMAIN
             )
         ) if use_factory else None
         awards = [
@@ -84,7 +87,7 @@ class Command(BaseCommand):
         users = UserFactory.create_batch(size=n_users, avatar=fuzzy.FuzzyChoice(
             storage_files(
                 settings.FIXTURES_PATH_TO_AVATARS,
-                'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+                'http://' + settings.AWS_S3_CUSTOM_DOMAIN
             )
         ) if use_factory else None)
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Users'))
@@ -96,7 +99,7 @@ class Command(BaseCommand):
             cover=fuzzy.FuzzyChoice(
                 storage_files(
                     settings.FIXTURES_PATH_TO_LITTLE,
-                    'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+                    'http://' + settings.AWS_S3_CUSTOM_DOMAIN
                 )
             ) if use_factory else None,
             license=factory.Iterator(licenses),
@@ -129,6 +132,23 @@ class Command(BaseCommand):
                     user.vote(ew['work'], ew['award'])
         self.stdout.write(self.style.SUCCESS('Users have voted.'))
 
+    def download_and_upload_images(self, users, awards, works):
+        def _download_and_upload_images(obj, prop):
+            url = str(getattr(obj, prop))
+            response = request.urlopen(url)
+            data = response.read()
+            fp = tempfile.TemporaryFile()
+            fp.write(data)
+            fp.seek(0)
+            setattr(obj, prop, File(fp))
+            obj.save()
+        [_download_and_upload_images(user, 'avatar') for user in users]
+        self.stdout.write(self.style.SUCCESS('Updated avatar users.'))
+        [_download_and_upload_images(award, 'image') for award in awards]
+        self.stdout.write(self.style.SUCCESS('Updated image awards.'))
+        [_download_and_upload_images(work, 'cover') for work in works]
+        self.stdout.write(self.style.SUCCESS('Updated cover works.'))
+
     def handle(self, *args, **options):
         is_test = options['is-test']
         n_works = options['works']
@@ -141,3 +161,5 @@ class Command(BaseCommand):
         works = self.create_works(licenses, users, use_factory=not is_test, n_works=n_works)
         enrolled_works = self.enroll_works(awards, works)
         self.vote_works(users, enrolled_works)
+        if not is_test:
+            self.download_and_upload_images(users, awards, works)
