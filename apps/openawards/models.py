@@ -17,11 +17,11 @@ def lazy_upload_to(str_to_format):
 
 
 def upload_path(instance, filename):
-    if instance is User:
+    if isinstance(instance, User):
         return 'user.avatar/{0}/{1}'.format(instance.id, filename)
-    elif instance is Work:
+    elif isinstance(instance, Work):
         return 'work.cover/{0}/{1}'.format(instance.id, filename)
-    elif instance is Award:
+    elif isinstance(instance, Award):
         return 'award.image/{0}/{1}'.format(instance.id, filename)
 
 
