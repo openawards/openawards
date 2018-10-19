@@ -15,8 +15,8 @@ class TestModels(TestCase):
         """
         Two similar work titles should produce different slug
         """
-        w1 = fixtures.WorkFactory(title='title')
-        w2 = fixtures.WorkFactory(title='title ')
+        w1 = fixtures.WorkFactory(title='title', url='1')
+        w2 = fixtures.WorkFactory(title='title ', url='2')
         self.assertNotEqual(w1.slug, w2.slug)
 
     def test_two_awards_with_different_slug(self):
@@ -159,11 +159,11 @@ class TestModels(TestCase):
         user = fixtures.UserFactory()
         begin_with_credits = user.remain_credits
         award = fixtures.AwardFactory()
-        for _ in range(begin_with_credits):
-            work = fixtures.WorkFactory()
+        for i in range(begin_with_credits):
+            work = fixtures.WorkFactory(url=str(i))
             award.enroll_work(work)
             user.vote(work, award)
-        work = fixtures.WorkFactory()
+        work = fixtures.WorkFactory(url='abc')
         award.enroll_work(work)
         with self.assertRaises(NotEnoughCreditsException):
             user.vote(work, award)
