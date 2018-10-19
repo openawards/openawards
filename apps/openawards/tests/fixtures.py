@@ -48,11 +48,9 @@ class WorkFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = apps.get_model('openawards', 'Work')
     title = factory.Sequence(lambda n: "Work %d" % n)
-    license = factory.Iterator(apps.get_model('openawards', 'License').objects.all())
     description = lorem.text()
     created = fuzzy.FuzzyDateTime(
         start_dt=timezone.now() - datetime.timedelta(days=100),
         end_dt=timezone.now()
     )
-    creator = factory.Iterator(apps.get_model('openawards', 'User').objects.all())
     url = factory.Sequence(lambda n: "http://work%d.file" % n)

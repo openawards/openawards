@@ -78,13 +78,18 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Users'))
         return users
 
-    def create_works(self):
-        works = WorkFactory.create_batch(size=100, cover = factory.Iterator(
-            storage_files(
-                settings.FIXTURES_PATH_TO_LITTLE,
-                'https://' + settings.AWS_S3_CUSTOM_DOMAIN
-            )
-        ))
+    def create_works(self, licenses, users):
+        works = WorkFactory.create_batch(
+            size=100,
+            cover=factory.Iterator(
+                storage_files(
+                    settings.FIXTURES_PATH_TO_LITTLE,
+                    'https://' + settings.AWS_S3_CUSTOM_DOMAIN
+                )
+            ),
+            license=factory.Iterator(licenses),
+            creator=factory.Iterator(users)
+        )
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Works'))
         return works
 
@@ -116,9 +121,9 @@ class Command(BaseCommand):
         assert settings.DEBUG
         settings.ADD_STORAGE_IMAGES_TO_FIXTURES = True
         Flush().handle(interactive=False, database=DEFAULT_DB_ALIAS, **options)
-        self.create_licenses()
+        licenses = self.create_licenses()
         awards = self.create_awards()
         users = self.create_users()
-        works = self.create_works()
+        works = self.create_works(licenses, users)
         enrolled_works = self.enroll_works(awards, works)
         self.vote_works(users, enrolled_works)
