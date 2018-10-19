@@ -9,14 +9,25 @@ from django.utils import timezone
 from django.db.models import Sum
 
 
+# upload_to=lazy_upload_to('user.avatar/{0}/{1}')
 def lazy_upload_to(str_to_format):
-    def path_to_upload(instance, filename):
+    def _path_to_upload(instance, filename):
         return str_to_format.format(instance.id, filename)
-    return path_to_upload
+    return _path_to_upload
+
+
+def upload_path(instance, filename):
+    if instance is User:
+        return 'user.avatar/{0}/{1}'.format(instance.id, filename)
+    elif instance is Work:
+        return 'work.cover/{0}/{1}'.format(instance.id, filename)
+    elif instance is Award:
+        return 'award.image/{0}/{1}'.format(instance.id, filename)
+
 
 
 class User(BaseUser):
-    avatar = models.ImageField(null=True, upload_to=lazy_upload_to('user.avatar/{0}/{1}'))
+    avatar = models.ImageField(null=True, upload_to=upload_path)
 
     def vote(self, work, award):
         if work.creator == self \
@@ -101,7 +112,7 @@ class Work(models.Model):
     slug = models.CharField(max_length=100, unique=True)
     license = models.ForeignKey('License', on_delete=models.SET_NULL, null=True)
     description = models.TextField()
-    cover = models.ImageField(null=True, blank=True, upload_to=lazy_upload_to('work.cover/{0}/{1}'))
+    cover = models.ImageField(null=True, blank=True, upload_to=upload_path)
     created = models.DateTimeField(null=True, blank=True)
     creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='works')
     url = models.CharField(max_length=200, blank=False, unique=True)
@@ -115,7 +126,7 @@ class Award(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a video title", unique=True)
     slug = models.CharField(max_length=100, unique=True)
     created = models.DateField(null=True, blank=True)
-    image = models.ImageField(null=True, upload_to=lazy_upload_to('award.image/{0}/{1}'))
+    image = models.ImageField(null=True, upload_to=upload_path)
     active = models.BooleanField(default=False)
     description = models.TextField()
     works = models.ManyToManyField(Work, blank=True, related_name='awards')
