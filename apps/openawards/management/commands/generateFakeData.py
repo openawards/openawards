@@ -9,11 +9,23 @@ from django.db import DEFAULT_DB_ALIAS
 from apps.openawards.tests.fixtures import UserFactory, WorkFactory, AwardFactory
 import lorem
 import factory
+import factory.fuzzy as fuzzy
 from apps.openawards.lib.utils import storage_files
 
 
 class Command(BaseCommand):
     help = 'Generates fake data for all the models, for testing purposes.'
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--test', '--test', action='store_true', dest='is-test'
+        )
+        parser.add_argument(
+            '--works', '--works', action='store', type=int, dest='works', default=100
+        )
+        parser.add_argument(
+            '--users', '--users', action='store', type=int, dest='users', default=50
+        )
 
     def create_licenses(self):
         licenses = [
@@ -34,33 +46,33 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'License'))
         return licenses
 
-    def create_awards(self):
-        factory_iterator = factory.Iterator(
+    def create_awards(self, use_factory=True):
+        img = fuzzy.FuzzyChoice(
             storage_files(
                 settings.FIXTURES_PATH_TO_COVERS,
                 'https://' + settings.AWS_S3_CUSTOM_DOMAIN
             )
-        )
+        ) if use_factory else None
         awards = [
             AwardFactory(
                 name="Animated shorts award",
                 description=lorem.text(),
-                image=factory_iterator
+                image=img
             ),
             AwardFactory(
                 name="Open Music Best Album",
                 description=lorem.text(),
-                image=factory_iterator
+                image=img
             ),
             AwardFactory(
                 name="Fiction Novel Collective Culture Award",
                 description=lorem.text(),
-                image=factory_iterator
+                image=img
             ),
             AwardFactory(
                 name="Essay and Academic Open Knowledge Award",
                 description=lorem.text(),
-                image=factory_iterator
+                image=img
             )
         ]
         for award in awards:
@@ -68,25 +80,25 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Awards'))
         return awards
 
-    def create_users(self):
-        users = UserFactory.create_batch(size=50, avatar=factory.Iterator(
+    def create_users(self, use_factory=True, n_users=50):
+        users = UserFactory.create_batch(size=n_users, avatar=fuzzy.FuzzyChoice(
             storage_files(
                 settings.FIXTURES_PATH_TO_AVATARS,
                 'https://' + settings.AWS_S3_CUSTOM_DOMAIN
             )
-        ))
+        ) if use_factory else None)
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Users'))
         return users
 
-    def create_works(self, licenses, users):
+    def create_works(self, licenses, users, use_factory=True, n_works=100):
         works = WorkFactory.create_batch(
-            size=100,
-            cover=factory.Iterator(
+            size=n_works,
+            cover=fuzzy.FuzzyChoice(
                 storage_files(
                     settings.FIXTURES_PATH_TO_LITTLE,
                     'https://' + settings.AWS_S3_CUSTOM_DOMAIN
                 )
-            ),
+            ) if use_factory else None,
             license=factory.Iterator(licenses),
             creator=factory.Iterator(users)
         )
@@ -118,12 +130,14 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Users have voted.'))
 
     def handle(self, *args, **options):
-        assert settings.DEBUG
-        settings.ADD_STORAGE_IMAGES_TO_FIXTURES = True
+        is_test = options['is-test']
+        n_works = options['works']
+        n_users = options['users']
+        assert settings.DEBUG or is_test
         Flush().handle(interactive=False, database=DEFAULT_DB_ALIAS, **options)
         licenses = self.create_licenses()
-        awards = self.create_awards()
-        users = self.create_users()
-        works = self.create_works(licenses, users)
+        awards = self.create_awards(use_factory=not is_test)
+        users = self.create_users(use_factory=not is_test, n_users=n_users)
+        works = self.create_works(licenses, users, use_factory=not is_test, n_works=n_works)
         enrolled_works = self.enroll_works(awards, works)
         self.vote_works(users, enrolled_works)

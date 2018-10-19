@@ -47,7 +47,7 @@ class AwardFactory(factory.django.DjangoModelFactory):
 class WorkFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = apps.get_model('openawards', 'Work')
-    title = factory.Sequence(lambda n: "Work %d" % n)
+    title = factory.Sequence(lambda n: lorem.sentence().replace('.', str(n)))
     description = lorem.text()
     created = fuzzy.FuzzyDateTime(
         start_dt=timezone.now() - datetime.timedelta(days=100),
