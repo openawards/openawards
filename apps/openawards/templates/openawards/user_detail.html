@@ -40,7 +40,8 @@
                 {% endif %}
             </div>
             <div class="works-content">
-                {% for work in object.works.objects.all %}
+                {% for work in object.works.all %}
+                {% include 'openawards/reusable/work-list.html' %}
                 {% empty %}
                   No works here!
                 {% endfor %}

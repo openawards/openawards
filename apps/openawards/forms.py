@@ -6,6 +6,7 @@ from django.apps import apps
 from .lib.form_fields import ExtendedImageField
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import PasswordChangeForm
+import datetime
 
 
 class WorkForm(forms.ModelForm):
@@ -13,6 +14,18 @@ class WorkForm(forms.ModelForm):
         model = apps.get_model('openawards', 'Work')
         fields = ('cover', 'title', 'url', 'description', 'license')
         cover = ExtendedImageField(required=False, resize=(500, 500))
+
+    def __init__(self, creator, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.creator = creator
+
+    def save(self, commit=True):
+        work = super().save(commit=False)
+        work.creator = self.creator
+        work.created = datetime.datetime.utcnow()
+        if commit:
+            work.save()
+        return work
 
 
 class UserAccountForm(forms.ModelForm):

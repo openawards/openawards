@@ -9,7 +9,7 @@ from .EtiquetteView import EtiquetteView
 from .GetCreditsView import GetCreditsView
 from .HistoricView import HistoricView
 from .HomeView import HomeView
-from .NewWorkDetailView import NewWorkDetailView
+from .NewWorkView import NewWorkView
 from .PastAwardsListView import PastAwardsListView
 from .ProfileDetailView import ProfileDetailView
 from .WorkDetailView import WorkDetailView

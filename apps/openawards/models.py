@@ -101,7 +101,7 @@ class Work(models.Model):
     slug = models.CharField(max_length=100, unique=True)
     license = models.ForeignKey('License', on_delete=models.SET_NULL, null=True)
     description = models.TextField()
-    cover = models.ImageField(null=True, upload_to=lazy_upload_to('work.cover/{0}/{1}'))
+    cover = models.ImageField(null=True, blank=True, upload_to=lazy_upload_to('work.cover/{0}/{1}'))
     created = models.DateTimeField(null=True, blank=True)
     creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, related_name='works')
     url = models.CharField(max_length=200, blank=False, unique=True)
