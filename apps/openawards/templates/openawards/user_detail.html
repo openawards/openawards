@@ -41,7 +41,7 @@
             </div>
             <div class="works-content">
                 {% for work in object.works.all %}
-                {% include 'openawards/reusable/work-list.html' %}
+                    {% include 'openawards/reusable/work-list.html' with work=work %}
                 {% empty %}
                   No works here!
                 {% endfor %}
