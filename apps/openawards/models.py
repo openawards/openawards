@@ -25,7 +25,6 @@ def upload_path(instance, filename):
         return 'award.image/{0}/{1}'.format(instance.id, filename)
 
 
-
 class User(BaseUser):
     avatar = models.ImageField(null=True, upload_to=upload_path)
 

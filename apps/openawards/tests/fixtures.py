@@ -4,6 +4,7 @@
 import factory
 from factory import fuzzy
 import datetime
+import pytz
 from django.conf import settings
 from django.utils import timezone
 from django.apps import apps
@@ -29,6 +30,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     last_name = factory.Faker('last_name')
     email = factory.Faker('email')
     password = factory.PostGenerationMethodCall('set_password', 'test')
+    avatar =  factory.Iterator(storage_files('test-images/avatars', 'https://' + settings.AWS_S3_CUSTOM_DOMAIN))
 
     is_active = True
     is_staff = False
@@ -45,6 +47,7 @@ class AwardFactory(factory.django.DjangoModelFactory):
         model = apps.get_model('openawards', 'Award')
     name = factory.Sequence(lambda n: "Award %d" % n)
     active = True
+    image = factory.Iterator(storage_files('test-images/covers', 'https://' + settings.AWS_S3_CUSTOM_DOMAIN))
 
 
 class WorkFactory(factory.django.DjangoModelFactory):
@@ -53,6 +56,10 @@ class WorkFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda n: "Work %d" % n)
     license = factory.Iterator(apps.get_model('openawards', 'License').objects.all())
     description = lorem.text()
-    created = fuzzy.FuzzyDate(start_date=timezone.now() - datetime.timedelta(days=100), end_date=timezone.now())
+    created = fuzzy.FuzzyDateTime(
+        start_dt=timezone.now() - datetime.timedelta(days=100),
+        end_dt=timezone.now()
+    )
     creator = factory.Iterator(apps.get_model('openawards', 'User').objects.all())
-    cover = factory.Iterator(storage_files('test-images/avatar', settings.AWS_S3_ENDPOINT_URL))
+    url = factory.Sequence(lambda n: "http://work%d.file" % n)
+    cover = factory.Iterator(storage_files('test-images/littles', 'https://' + settings.AWS_S3_CUSTOM_DOMAIN))

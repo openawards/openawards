@@ -3,13 +3,10 @@
 from django.core.management.base import BaseCommand
 from openawards.models import User, License, Work, Award, Vote
 import random
-import time
-import string
 from django.conf import settings
 from django.core.management.commands.flush import Command as Flush
 from django.db import DEFAULT_DB_ALIAS
-# from django.utils import timezone
-from apps.openawards.tests.fixtures import UserFactory, WorkFactory
+from apps.openawards.tests.fixtures import UserFactory, WorkFactory, AwardFactory
 import lorem
 
 
@@ -37,27 +34,20 @@ class Command(BaseCommand):
 
     def create_awards(self):
         awards = [
-            Award(
+            AwardFactory(
                 name="Animated shorts award",
-                created=str_time_prop(prop=random.random()),
-                active=True,
                 description=lorem.text()
             ),
-            Award(
+            AwardFactory(
                 name="Open Music Best Album",
-                created=str_time_prop(prop=random.random()),
-                active=True,
                 description=lorem.text()
             ),
-            Award(
+            AwardFactory(
                 name="Fiction Novel Collective Culture Award",
-                created=str_time_prop(prop=random.random()), active=True,
                 description=lorem.text()
             ),
-            Award(
+            AwardFactory(
                 name="Essay and Academic Open Knowledge Award",
-                created=str_time_prop(prop=random.random()),
-                active=True,
                 description=lorem.text()
             )
         ]
@@ -76,63 +66,36 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Works'))
         return works
 
+    def enroll_works(self, awards, works):
+        enrolled_works = []
+        n_enrolled = 0
+        for work in works:
+            for award in awards:
+                should_enroll = bool(random.getrandbits(1))
+                if should_enroll:
+                    award.enroll_work(work=work)
+                    enrolled_works.append({
+                        'work': work,
+                        'award': award
+                    })
+                    n_enrolled += 1
+        self.stdout.write(self.style.SUCCESS('%d works enrolled to corresponding awards.' % n_enrolled))
+        return enrolled_works
+
+    def vote_works(self, users, enrolled_works):
+        for user in users:
+            for ew in enrolled_works:
+                should_vote = bool(random.getrandbits(1))
+                if ew['work'].creator != user and user.has_credits and should_vote:
+                    user.vote(ew['work'], ew['award'])
+        self.stdout.write(self.style.SUCCESS('Users have voted.'))
+
     def handle(self, *args, **options):
-        from apps.openawards.lib.utils import storage_files
         assert settings.DEBUG
         Flush().handle(interactive=False, database=DEFAULT_DB_ALIAS, **options)
         self.create_licenses()
-        self.create_awards()
-        self.create_users()
-        self.create_works()
-        return
-
-        for award in Award.objects.order_by("id").all():
-            if award.id == 1:
-                for x in range(1, 12):
-                    award.enroll_work(work=x)
-            elif award.id == 2:
-                for x in range(13, 24):
-                    award.enroll_work(work=x)
-            elif award.id == 3:
-                for x in range(25, 36):
-                    award.enroll_work(work=x)
-            elif award.id == 4:
-                for x in range(37, 50):
-                    award.enroll_work(work=x)
-        self.stdout.write(self.style.SUCCESS('Works enrolled to corresponding awards.'))
-
-        for user in User.objects.order_by("id").all():
-            # Randomly deciding how many votes this user will cast
-            for x in range(random.randint(5, 30)):
-                # Going through all 50 works…
-                for w in range(1, 50):
-                    # …and randomly making this user vote to 25% of them.
-                    if random.randint(0, 3) == 3:
-                        # TODO: Trying to loop through all the Awards that this Work is enrolled at, but failing!
-                        work = Work.objects.get(id=w)
-                        for enrolled_award in work.award_set.all():
-                            user.vote(work=work, award=enrolled_award)
-        self.stdout.write(self.style.SUCCESS('All users voted to random works, in every award this work is enrolled.'))
-
-
-def random_string_generator(size=10, with_space=False, chars=string.ascii_lowercase + string.digits):
-    if with_space:
-        chars += " "
-    return ''.join(random.choice(chars) for _ in range(size))
-
-
-def str_time_prop(prop, format='%Y-%m-%d', start="2018-01-01", end="2018-12-30", ):
-    """
-    Get a time at a proportion of a range of two formatted times.
-    start and end should be strings specifying times formated in the
-    given format (strftime-style), giving an interval [start, end].
-    prop specifies how a proportion of the interval to be taken after
-    start.  The returned time will be in the specified format.
-    """
-
-    stime = time.mktime(time.strptime(start, format))
-    etime = time.mktime(time.strptime(end, format))
-
-    ptime = stime + prop * (etime - stime)
-
-    return time.strftime(format, time.localtime(ptime))
+        awards = self.create_awards()
+        users = self.create_users()
+        works = self.create_works()
+        enrolled_works = self.enroll_works(awards, works)
+        self.vote_works(users, enrolled_works)
