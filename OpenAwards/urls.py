@@ -22,6 +22,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     url('admin/login', RedirectView.as_view(pattern_name=settings.LOGIN_URL, permanent=True, query_string=True)),
+]
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
