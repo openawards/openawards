@@ -31,10 +31,14 @@ class UserFactory(factory.django.DjangoModelFactory):
     is_active = True
     is_staff = False
     is_superuser = False
-    last_login = factory.LazyAttribute(
-        lambda _o: datetime.datetime(2000, 1, 1, tzinfo=_get_tzinfo()))
-    date_joined = factory.LazyAttribute(
-        lambda _o: datetime.datetime(1999, 1, 1, tzinfo=_get_tzinfo()))
+    last_login = fuzzy.FuzzyDateTime(
+        start_dt=timezone.now() - datetime.timedelta(days=10),
+        end_dt=timezone.now()
+    )
+    date_joined = fuzzy.FuzzyDateTime(
+        start_dt=timezone.now() - datetime.timedelta(days=100),
+        end_dt=timezone.now() - datetime.timedelta(days=10)
+    )
 
 
 class AwardFactory(factory.django.DjangoModelFactory):
@@ -48,7 +52,7 @@ class WorkFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = apps.get_model('openawards', 'Work')
     title = factory.Sequence(lambda n: lorem.sentence().replace('.', str(n)))
-    description = lorem.text()
+    description = factory.Sequence(lambda _: lorem.paragraph())
     created = fuzzy.FuzzyDateTime(
         start_dt=timezone.now() - datetime.timedelta(days=100),
         end_dt=timezone.now()
