@@ -1,7 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-
-
+<div>
+    <div>
+        <h3>Current awards</h3>
+        <div>
+            {% for award in awards %}
+                {% include 'openawards/reusable/award-thumbnail.html' with award=award %}
+            {% empty %}
+              No works here!
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <h3>Works selection</h3>
+        <div>
+            {% for work in works %}
+                {% include 'openawards/reusable/work-thumbnail.html' with work=work %}
+            {% empty %}
+              No works here!
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
