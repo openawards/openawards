@@ -128,10 +128,12 @@ class Command(BaseCommand):
         for user in users:
             n_votes = random.randint(0, user.remain_credits)
             n_final_credits = user.remain_credits - n_votes
+            already_voted = []
             while user.remain_credits > n_final_credits:
                 ew = random.choice(enrolled_works)
-                if ew['work'].creator != user and user.has_credits:
+                if ew['work'].creator != user and user.has_credits and ew not in already_voted:
                     user.vote(ew['work'], ew['award'])
+                    already_voted.append(ew)
         self.stdout.write(self.style.SUCCESS('Users have voted.'))
 
     def download_and_upload_images(self, users, awards, works):
