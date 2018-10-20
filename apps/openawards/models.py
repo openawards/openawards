@@ -99,7 +99,7 @@ class PayPalCreditAcquisition(CreditAcquisition):
 
 
 class License(models.Model):
-    name = models.CharField(max_length=200, help_text="Enter a video title", blank=False, unique=True)
+    name = models.CharField(max_length=200, help_text="Find it in <a target='_blank' href='http://creativecommons.org'>creativecommons.org</a>", blank=False, unique=True)
     link = models.CharField(max_length=200)
 
     def __str__(self):

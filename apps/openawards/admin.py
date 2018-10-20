@@ -1,9 +1,10 @@
 from django.contrib import admin
+from openawards.models import User, License, Work, Award, Vote
 
-# Register your models here.
-from django.apps import apps
+admin.site.register(User)
+admin.site.register(License)
+admin.site.register(Work)
+admin.site.register(Award)
 
-admin.site.register(apps.get_model('openawards', 'User'))
-admin.site.register(apps.get_model('openawards', 'Award'))
-admin.site.register(apps.get_model('openawards', 'Work'))
-admin.site.register(apps.get_model('openawards', 'License'))
+# To have it at the beginning for testing purposes:
+admin.site.register(Vote)
