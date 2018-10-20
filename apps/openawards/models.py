@@ -38,7 +38,7 @@ class User(BaseUser):
         if not self.has_credits:
             raise NotEnoughCreditsException
 
-        Vote(award=award, work=work, fan=self).save()
+        Vote(award=award, work=work, fan=self, voted_on=timezone.now()).save()
 
     @classmethod
     def post_save(cls, sender, instance, **kwargs):
@@ -159,6 +159,7 @@ class Vote(models.Model):
     fan = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=False, related_name='votes')
     work = models.ForeignKey('Work', on_delete=models.CASCADE, null=False, related_name='votes')
     award = models.ForeignKey('Award', on_delete=models.CASCADE, null=False)
+    voted_on = models.DateTimeField(null=True, blank=False)
 
 
 pre_save.connect(Award.pre_save, sender=Award)

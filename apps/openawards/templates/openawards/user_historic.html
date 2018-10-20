@@ -2,4 +2,11 @@
 
 {% block user_content %}
 <h2>User historic</h2>
+{% for vote in user.votes.all %}
+    <div>
+        {{ vote.award.name }}
+    </div>
+{% empty %}
+  No works here!
+{% endfor %}
 {% endblock %}
