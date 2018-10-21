@@ -121,6 +121,9 @@ class Work(models.Model):
     def pre_save(cls, sender, instance, **kwargs):
         slugify_model(instance, 'title')
 
+    def __str__(self):
+        return self.title
+
 
 class Award(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a video title", unique=True)

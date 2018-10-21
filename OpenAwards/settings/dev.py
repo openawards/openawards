@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.openawards.apps.OpenAwardsConfig',
     'constance.backends.database',
+    'constance',
     'storages'
 ]
 
@@ -150,9 +151,10 @@ USER_FIXTURE_FACTORY_CLASS = 'openawards.tests.fixtures.UserFactory'
 # Constance
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_CONFIG = {
-    'CREDITS_WHEN_CREATED': (5, 'Number of credits given to the user when they sign up'),
+    'CREDITS_WHEN_CREATED': (5, 'Number of credits given to the user when they sign up', int),
     'ETIQUETTE_TEXT': ('# Etiquette!', 'Markdown text for etiquette page')
 }
+CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 
 FIXTURES_PATH_TO_COVERS = 'test-images/covers'
 FIXTURES_PATH_TO_LITTLE = 'test-images/littles'
