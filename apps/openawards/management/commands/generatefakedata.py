@@ -158,7 +158,7 @@ class Command(BaseCommand):
         n_works = options['works']
         n_users = options['users']
         assert settings.DEBUG or is_test
-        Flush().handle(interactive=False, database=DEFAULT_DB_ALIAS, **options)
+        Flush().handle(interactive=not is_test, database=DEFAULT_DB_ALIAS, **options)
         licenses = self.create_licenses()
         awards = self.create_awards(use_factory=not is_test)
         users = self.create_users(use_factory=not is_test, n_users=n_users)
