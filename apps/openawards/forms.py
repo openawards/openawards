@@ -13,7 +13,7 @@ class WorkForm(forms.ModelForm):
     class Meta:
         model = apps.get_model('openawards', 'Work')
         fields = ('cover', 'title', 'url', 'description', 'license')
-        cover = ExtendedImageField(required=False, resize=(500, 500))
+    cover = ExtendedImageField(required=False, resize=(500, 500), filename='cover.png')
 
     def __init__(self, creator, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,7 +37,7 @@ class UserAccountForm(forms.ModelForm):
         'password_mismatch': "The two password fields didn't match."
     }
 
-    avatar = ExtendedImageField(required=False, resize=(200, 200))
+    avatar = ExtendedImageField(required=False, resize=(200, 200), filename='avatar.png')
     new_password1 = forms.CharField(
         label='New password',
         widget=forms.PasswordInput,

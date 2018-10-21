@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from constance import config
 from django.utils import timezone
 from django.db.models import Sum
+from uuid import uuid4
 
 
 # upload_to=lazy_upload_to('user.avatar/{0}/{1}')
@@ -18,11 +19,11 @@ def lazy_upload_to(str_to_format):
 
 def upload_path(instance, filename):
     if isinstance(instance, User):
-        return 'user.avatar/{0}/{1}'.format(instance.id, filename)
+        return 'user.avatar/{0}/{1}'.format(instance.username, filename)
     elif isinstance(instance, Work):
-        return 'work.cover/{0}/{1}'.format(instance.id, filename)
+        return 'work.cover/{0}/{1}'.format(str(uuid4()), filename)
     elif isinstance(instance, Award):
-        return 'award.image/{0}/{1}'.format(instance.id, filename)
+        return 'award.image/{0}/{1}'.format(str(uuid4()), filename)
 
 
 class User(BaseUser):

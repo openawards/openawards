@@ -29,6 +29,3 @@ class AccountFormView(UserViewMixin, generic.UpdateView):
             login(self.request, user)
             update_session_auth_hash(self.request, user)
         return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)

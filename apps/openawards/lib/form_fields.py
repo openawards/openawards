@@ -7,9 +7,10 @@ from io import BytesIO
 
 
 class ExtendedImageField(forms.ImageField):
-    def __init__(self, resize=None, *args, **kwargs):
+    def __init__(self, resize=None, filename=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.resize = resize
+        self.filename = filename
 
     def to_python(self, data):
         f = super().to_python(data)
@@ -21,8 +22,7 @@ class ExtendedImageField(forms.ImageField):
         # image.show()
         image = image.resize(self.resize)
         image.save(byte_aray, format='PNG')
-
-        f.name = 'avatar.png'
+        f.name = self.filename if self.filename else f.name
         f.file = byte_aray
         f.content_type = Image.MIME.get(image.format)
         f.image = image
