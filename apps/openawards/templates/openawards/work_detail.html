@@ -29,11 +29,11 @@
             </div>
         </div>
     </div>
-    {% if object.awards > 0 %}
+    {% if object.current_awards|length > 0 %}
     <div>
         Taking part of:
         <ul>
-            {% for award in object.awards %}
+            {% for award in object.current_awards %}
             <li>{{ award.name }}</li>
             {% endfor %}
         </ul>

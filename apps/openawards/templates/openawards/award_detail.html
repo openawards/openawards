@@ -1,4 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="global-content">
+    <img src="{{ object.image.url }}">
+    <h2>{{ object.name }}</h2>
+    From {{ object.starts_on }} until {{ object.ends_on }}.
+    <span>{{ object.description }}</span>
+    {% if object.winners|length > 0 %}
+    {% else %}
+        <ul>
+        {% for work in object.works.all %}
+            <li>{{ work.title }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>
 {% endblock %}
