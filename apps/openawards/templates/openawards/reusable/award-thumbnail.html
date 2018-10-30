@@ -1,3 +1,5 @@
-<div>
-    <img src="{{ award.image.url }}">
+<a href="{{ award.absolute_url }}">
+<div class="award-thumbnail" style="background-image: url({{ award.image.url }})">
+    <span class="award-title">{{ award.name }}</span>
 </div>
+</a>

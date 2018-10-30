@@ -288,6 +288,14 @@ footer .dev-by a {
   align-items: center;
 }
 
+.big-content {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+}
+
 .generic {
   width: 100%;
   min-height: 70vh;
@@ -309,6 +317,68 @@ footer .dev-by a {
 .generic .generic-content p {
   padding: 10px 0;
 }
+.front-section {
+  background-color: #e9e9e9;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.front-section h3 {
+  background-color: #B6D1BF;
+  font-size: 3vw;
+  padding: 20px;
+}
+
+.front-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.awards-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.award-thumbnail {
+  margin: 10px;
+  width: 500px;
+  height: 700px;
+  border-radius: 13px;
+  display: flex;
+}
+.award-thumbnail span {
+  font-size: 3vw;
+  background-color: rgba(255, 255, 255, 0.3);
+  align-self: flex-end;
+  margin-bottom: 5px;
+}
+
+.works-list {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.work-thumbnail {
+  padding: 10px;
+  background-color: white;
+  border-radius: 13px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  justify-content: space-between;
+}
+.work-thumbnail img {
+  border-radius: 13px;
+  width: 100%;
+}
+.work-thumbnail .work-title {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .user-data {
   width: 55%;
   display: flex;

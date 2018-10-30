@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from constance import config
 from django.utils import timezone
 from django.db.models import Sum
+from django.shortcuts import reverse
 
 
 # upload_to=lazy_upload_to('user.avatar/{0}/{1}')
@@ -68,6 +69,14 @@ class User(BaseUser):
             acquired_by=self
         ).save()
 
+    @property
+    def full_name(self):
+        return self.get_full_name() if self.get_full_name() else self.username
+
+    @property
+    def profile_url(self):
+        return reverse('profile', args=[str(self.username)])
+
 
 class CreditAcquisition(models.Model):
     CREDIT_ACQUISITION_SOURCES = (
@@ -128,6 +137,10 @@ class Work(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def absolute_url(self):
+        return reverse('work', args=[str(self.slug)])
+
 
 class Award(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a video title", unique=True)
@@ -146,9 +159,9 @@ class Award(models.Model):
     def pre_save(cls, sender, instance, **kwargs):
         slugify_model(instance, 'name')
 
-    def get_absolute_url(self):
-        # return reverse('award-detail', args=[str(self.slug)])
-        pass
+    @property
+    def absolute_url(self):
+        return reverse('award', args=[str(self.slug)])
 
     def __str__(self):
         return self.name

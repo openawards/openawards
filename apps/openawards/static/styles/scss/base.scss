@@ -283,3 +283,11 @@ footer {
     margin: 0 auto;
     align-items: center;
 }
+
+.big-content {
+    width: $content-big-width;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+}
