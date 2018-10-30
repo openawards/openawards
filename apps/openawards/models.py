@@ -19,11 +19,11 @@ def lazy_upload_to(str_to_format):
 
 def upload_path(instance, filename):
     if isinstance(instance, User):
-        return 'user.avatar/{0}/{1}'.format(instance.username, filename)
+        return 'user.avatar/{0}/avatar.png'.format(instance.username, filename)
     elif isinstance(instance, Work):
-        return 'work.cover/{0}/{1}'.format(str(uuid4()), filename)
+        return 'work.cover/{0}/cover.png'.format(str(instance.id), filename)
     elif isinstance(instance, Award):
-        return 'award.image/{0}/{1}'.format(str(uuid4()), filename)
+        return 'award.image/{0}/image.png'.format(str(instance.id), filename)
 
 
 class User(BaseUser):
@@ -100,7 +100,12 @@ class PayPalCreditAcquisition(CreditAcquisition):
 
 
 class License(models.Model):
-    name = models.CharField(max_length=200, help_text="Find it in <a target='_blank' href='http://creativecommons.org'>creativecommons.org</a>", blank=False, unique=True)
+    name = models.CharField(
+        max_length=200,
+        help_text="Find it in <a target='_blank' href='http://creativecommons.org'>creativecommons.org</a>",
+        blank=False,
+        unique=True
+    )
     link = models.CharField(max_length=200)
 
     def __str__(self):

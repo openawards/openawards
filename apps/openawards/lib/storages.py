@@ -7,4 +7,4 @@ from django.conf import settings
 
 class MediaStorage(S3Boto3Storage):
     location = settings.EXTERNAL_MEDIA_PATH
-    file_overwrite = False
+    file_overwrite = settings.MEDIA_FILE_OVERWRITE
