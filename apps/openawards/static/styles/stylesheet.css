@@ -442,4 +442,26 @@ footer .dev-by a {
   margin-top: 20px;
 }
 
+.work-li {
+  width: 100%;
+  border: 1px solid #528564;
+  display: flex;
+  flex-direction: row;
+  border-radius: 13px;
+  margin: 10px 0;
+  padding: 10px;
+}
+.work-li .work-title {
+  font-weight: bold;
+}
+.work-li .work-text {
+  display: flex;
+  flex-direction: column;
+}
+.work-li img {
+  max-height: 100px;
+  max-width: 100px;
+  margin-right: 15px;
+}
+
 /*# sourceMappingURL=stylesheet.css.map */

@@ -1,0 +1,24 @@
+.work-li {
+    width: 100%;
+    border: 1px solid $color-1;
+    display: flex;
+    flex-direction: row;
+    border-radius: 13px;
+    margin: 10px 0;
+    padding: 10px;
+
+    .work-title {
+        font-weight: bold;
+    }
+
+    .work-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    img {
+        max-height: 100px;
+        max-width: 100px;
+        margin-right: 15px;
+    }
+}
