@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 from constance import config
 from django.utils import timezone
 from django.db.models import Sum
-from uuid import uuid4
 
 
 # upload_to=lazy_upload_to('user.avatar/{0}/{1}')
