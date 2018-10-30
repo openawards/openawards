@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="global-content">
+    <div>
+        <div>
+            <img src="{{ object.cover.url }}">
+        </div>
+        <div>
+            <h2>{{ object.title }}</h2>
+            Thanks to <a href="{{ object.creator.profile_url }}">{{ object.creator.full_name }}</a>
+            <div>
+                <span>License: </span><span>{{ object.license.name }}</span><br>
+                <span>Created on: </span><span>{{ object.created }}</span>
+                {% if object.won_at|length > 0 %}
+                <span>Awarded on:</span>
+                <ul>
+                    {% for award in object.won_at %}
+                    <li>{{ award.name}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div>
+                <span>Description:</span> <br>
+                <span>
+                    {{ object.description }}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% if object.awards > 0 %}
+    <div>
+        Taking part of:
+        <ul>
+            {% for award in object.awards %}
+            <li>{{ award.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
