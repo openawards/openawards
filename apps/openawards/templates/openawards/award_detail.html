@@ -7,9 +7,23 @@
     From {{ object.starts_on }} until {{ object.ends_on }}.
     <span>{{ object.description }}</span>
     {% if object.winners|length > 0 %}
-    {% else %}
+    {% elif not user.is_anonymous %}
         <h3>Enrolled works:</h3>
-        <a href="#" class="div-button"><div>Enroll your work</div></a>
+        <a href="javascript:$('#my-works').css('display', 'block');" class="div-button"><div>Enroll your work</div></a>
+        <div id="my-works" style="display: none;">
+            <form id="enroll-form" method="post" action="{% url 'enroll' %}">
+                {% csrf_token %}
+                <input type="hidden" name="award" value="{{ object.id }}">
+                <select id="work" name="work">
+                    {% for work in user.works.all %}
+                        {% if work not in object.works.all %}
+                        <option value="{{ work.id }}">{{ work.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <a href="javascript:$('#enroll-form').submit();" class="div-button-little"><div>Enroll it!</div></a>
+            </form>
+        </div>
         {% for work in object.works.all %}
             {% include 'openawards/reusable/work-list.html' with work=work show_vote=True award=object %}
         {% endfor %}

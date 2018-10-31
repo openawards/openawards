@@ -9,6 +9,7 @@ urlpatterns = [
     path('award/<slug:slug>', views.AwardDetailView.as_view(), name='award'),
     path('work/<slug:slug>', views.WorkDetailView.as_view(), name='work'),
     path('work/<work>/vote/<award>', views.VoteView.as_view(), name='vote'),
+    path('enroll', views.EnrollView.as_view(), name='enroll'),
     path('new-work', views.NewWorkView.as_view(), name='new_work'),
     path('user/<username>/profile', views.ProfileDetailView.as_view(), name='profile'),
     path('user/profile', views.ProfileDetailView.as_view(), name='my_profile'),

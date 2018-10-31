@@ -5,6 +5,7 @@ from .AccountFormView import AccountFormView
 from .AddCreditsView import AddCreditsView
 from .AwardDetailView import AwardDetailView
 from .AwardListView import AwardsListView
+from .EnrollView import EnrollView
 from .EtiquetteView import EtiquetteView
 from .GetCreditsView import GetCreditsView
 from .HistoricView import HistoricView
