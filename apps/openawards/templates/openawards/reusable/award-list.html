@@ -1,0 +1,13 @@
+<div class="work-li">
+    <div>
+        <img src="{{ award.image.url }}">
+    </div>
+    <div class="work-text">
+        <a href="{{ award.absolute_url }}" class="work-title">{{ award.name }}</a> <br>
+    </div>
+    {% if show_vote and award not in forbidden_awards %}
+    <div class="work-vote">
+        <a href="{% url 'vote' work=work.id award=award.id %}" class="div-button"><div>Vote</div></a>
+    </div>
+    {% endif %}
+</div>

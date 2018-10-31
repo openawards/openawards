@@ -3,7 +3,16 @@
 
 from django.views import generic
 from django.apps import apps
+from openawards.models import Award
 
 
 class WorkDetailView(generic.DetailView):
     model = apps.get_model('openawards', 'Work')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.object in self.request.user.works.all():
+            context['forbidden_awards'] = Award.objects.all()
+        else:
+            context['forbidden_awards'] = [vote.award for vote in self.request.user.votes.filter(work=self.object)]
+        return context

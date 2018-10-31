@@ -32,11 +32,9 @@
     {% if object.current_awards|length > 0 %}
     <div>
         Taking part of:
-        <ul>
             {% for award in object.current_awards %}
-            <li>{{ award.name }}</li>
+                {% include 'openawards/reusable/award-list.html' with award=award show_vote=True work=object forbidden_awards=forbidden_awards %}
             {% endfor %}
-        </ul>
     </div>
     {% endif %}
 </div>
