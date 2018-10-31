@@ -12,5 +12,6 @@ from .HomeView import HomeView
 from .NewWorkView import NewWorkView
 from .PastAwardsListView import PastAwardsListView
 from .ProfileDetailView import ProfileDetailView
+from .VoteView import VoteView
 from .WorkDetailView import WorkDetailView
 from .WorksListView import WorksListView

@@ -11,7 +11,7 @@
         <h3>Enrolled works:</h3>
         <a href="#" class="div-button"><div>Enroll your work</div></a>
         {% for work in object.works.all %}
-            {% include 'openawards/reusable/work-list.html' with work=work %}
+            {% include 'openawards/reusable/work-list.html' with work=work show_vote=True award=object %}
         {% endfor %}
     {% endif %}
 </div>

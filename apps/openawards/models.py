@@ -145,6 +145,9 @@ class Work(models.Model):
     def current_awards(self):
         return [award for award in self.awards.all() if award.active]
 
+    def can_be_voted(self, user, award):
+        return self.votes.filter(fan=user, award=award).first() is None
+
 
 class Award(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a video title", unique=True)
