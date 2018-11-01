@@ -442,6 +442,13 @@ footer .dev-by a {
   margin-top: 20px;
 }
 
+.user-historic {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #e9e9e9;
+  border-radius: 13px;
+}
+
 .work-li {
   width: 100%;
   border: 1px solid #528564;
@@ -478,6 +485,7 @@ footer .dev-by a {
 }
 .work-detail .work-data img {
   padding-right: 20px;
+  max-width: 400px;
 }
 .work-detail .work-data .work-data-details {
   padding: 20px 0;

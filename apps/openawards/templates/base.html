@@ -45,7 +45,7 @@
               <div>
                 <span>{{ user.get_username }}</span>
                 <br />
-                <span class="little-text">{{ user.remain_credits }} credits ─ 0 votes given</span>
+                <span class="little-text">{{ user.remain_credits }} credits ─ {{ user.votes.all|length }} votes given</span>
               </div>
           </div>
           </a>
