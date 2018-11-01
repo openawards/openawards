@@ -43,7 +43,7 @@
         }
 
         .work-data-details {
-            padding: 20px 0;
+            padding: 0 0 20px 0;
         }
 
         .date {
@@ -53,5 +53,27 @@
 
     .work-awards {
         width: 100%;
+    }
+}
+
+.not-enrolled {
+    color: $color-1;
+    font-weight: bold;
+    margin: 100px;
+    padding: 20px;
+    border: 1px solid $color-2;
+    width: 100%;
+    text-align: center;
+}
+
+.work-url {
+    margin: 20px 0;
+    border: 1px solid $color-2;
+    padding: 5px;
+    background-color: $color-4;
+
+    a {
+        color: $color-1;
+        font-weight: bold;
     }
 }
