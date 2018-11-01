@@ -12,9 +12,9 @@
     flex-direction: column;
     align-content: center;
     align-items: center;
+    margin-right: 20px;
 
     img {
-        width: 75%;
         margin: 0 auto;
         border-radius: 5%;
         box-shadow: 0 0 4px 0 rgba(0,0,0,.8);
@@ -23,6 +23,7 @@
     .realname {
         font-size: 1.3rem;
         font-weight: bold;
+        text-align: center;
     }
 
     .username {
@@ -30,14 +31,24 @@
         color: $color-3;
     }
 
+    a {
+        text-decoration: none;
+    }
+
     .credits {
-        width: 100%;
         background-color: $color-4;
         margin-top: 20px;
         border-radius: 5%;
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
 
         span {
             display: block;
+            margin-top: 10px;
+            font-weight: bold;
         }
 
         .number {
@@ -45,12 +56,25 @@
             background-color: $color-1;
             border-radius: 50%;
             color: $color-5;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-content: center;
+            flex-direction: column;
+            align-items: center;
         }
     }
 }
 
 .user-panel {
     margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .user-content {

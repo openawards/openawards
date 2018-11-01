@@ -15,15 +15,24 @@
             {% endif %}
             {% block under-image %}{% endblock %}
             <div class="user-panel">
-                <span class="realname">{{ object.first_name }} {{object.second_name}}</span>
-                <span class="username">{{ object.username }}</span>
+                <span class="realname">{{ object.full_name }} {{object.second_name}}</span>
+                {% if object.username == user.username %}
+                <span class="username">({{ object.username }})</span>
+                {% endif %}
             </div>
             {% block left_bar %}
             {% if object.username == user.username %}
             <div class="credits">
                 <span class="number">{{ object.remain_credits }}</span>
-                <span>credits</span>
+                <span>Credits</span>
             </div>
+
+            <a href="{% url 'historic' %}">
+            <div class="credits">
+                <span class="number">{{ object.votes.all|length }}</span>
+                <span>Votes</span>
+            </div>
+            </a>
             {% endif %}
             {% endblock %}
         </div>
