@@ -317,6 +317,35 @@ footer .dev-by a {
 .generic .generic-content p {
   padding: 10px 0;
 }
+.generic .generic-content td {
+  width: 30%;
+}
+.generic .generic-content form {
+  width: 50%;
+}
+.generic .generic-content input[type=text] {
+  margin: 3px 0;
+  width: 100%;
+}
+.generic .generic-content input[type=password] {
+  margin: 3px 0;
+  width: 100%;
+}
+.generic .generic-content input[type=email] {
+  margin: 3px 0;
+  width: 100%;
+}
+.generic .generic-content input[type=submit] {
+  margin: 3px 0;
+}
+.generic .generic-content span {
+  font-size: 0.7rem;
+}
+.generic .generic-content li {
+  font-size: 0.7rem;
+  list-style: none;
+}
+
 .front-section {
   background-color: #e9e9e9;
   margin-bottom: 20px;

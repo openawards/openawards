@@ -22,7 +22,40 @@
             padding: 10px 0;
         }
 
+        td {
+            width: 30%;
+        }
+
+        form {
+            width: 50%;
+        }
+
         input[type=text] {
+            margin: 3px 0;
+            width: 100%;
+        }
+
+        input[type=password] {
+            margin: 3px 0;
+            width: 100%;
+        }
+
+        input[type=email] {
+            margin: 3px 0;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            margin: 3px 0;
+        }
+
+        span {
+            font-size: 0.7rem;
+        }
+
+        li {
+            font-size: 0.7rem;
+            list-style: none;
         }
     }
 }
