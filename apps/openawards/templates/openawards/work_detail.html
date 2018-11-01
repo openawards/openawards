@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="global-content">
-    <div>
+<div class="global-content work-detail">
+    <div class="work-data">
         <div>
             <img src="{{ object.cover.url }}">
         </div>
         <div>
             <h2>{{ object.title }}</h2>
             Thanks to <a href="{{ object.creator.profile_url }}">{{ object.creator.full_name }}</a>
-            <div>
-                <span>License: </span><span>{{ object.license.name }}</span><br>
-                <span>Created on: </span><span>{{ object.created }}</span>
+            <div class="work-data-details">
+                <span class="date">Created on: {{ object.created }}</span>
+                <br>
+                <span>License: </span><a href="{{ object.license.url }}">{{ object.license.name }}</a><br>
                 {% if object.won_at|length > 0 %}
                 <span>Awarded on:</span>
                 <ul>
@@ -22,16 +23,16 @@
                 {% endif %}
             </div>
             <div>
-                <span>Description:</span> <br>
-                <span>
+                <h3>Description:</h3>
+                <p>
                     {{ object.description }}
-                </span>
+                </p>
             </div>
         </div>
     </div>
     {% if object.current_awards|length > 0 %}
-    <div>
-        Taking part of:
+    <div class="work-awards">
+        <h3>Taking part on:</h3>
             {% for award in object.current_awards %}
                 {% include 'openawards/reusable/award-list.html' with award=award show_vote=True work=object forbidden_awards=forbidden_awards %}
             {% endfor %}

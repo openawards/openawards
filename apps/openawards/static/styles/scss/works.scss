@@ -31,3 +31,26 @@
         border-radius: 13px;
     }
 }
+
+.work-detail {
+    .work-data {
+        display: flex;
+        flex-direction: row;
+
+        img {
+            padding-right: 20px;
+        }
+
+        .work-data-details {
+            padding: 20px 0;
+        }
+
+        .date {
+            font-style: italic;
+        }
+    }
+
+    .work-awards {
+        width: 100%;
+    }
+}

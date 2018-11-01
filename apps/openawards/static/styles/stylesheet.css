@@ -472,6 +472,23 @@ footer .dev-by a {
   border-radius: 13px;
 }
 
+.work-detail .work-data {
+  display: flex;
+  flex-direction: row;
+}
+.work-detail .work-data img {
+  padding-right: 20px;
+}
+.work-detail .work-data .work-data-details {
+  padding: 20px 0;
+}
+.work-detail .work-data .date {
+  font-style: italic;
+}
+.work-detail .work-awards {
+  width: 100%;
+}
+
 .award-detail .award-image {
   padding: 20px 0;
   border-radius: 75px;
@@ -500,6 +517,10 @@ footer .dev-by a {
   width: 100%;
   display: flex;
   flex-direction: row;
+}
+.award-detail .no-user {
+  padding: 20px 0;
+  width: 100%;
 }
 
 /*# sourceMappingURL=stylesheet.css.map */

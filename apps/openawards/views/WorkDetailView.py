@@ -11,8 +11,8 @@ class WorkDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.object in self.request.user.works.all():
+        if not self.request.user.is_anonymous and self.object in self.request.user.works.all():
             context['forbidden_awards'] = Award.objects.all()
-        else:
+        elif not self.request.user.is_anonymous:
             context['forbidden_awards'] = [vote.award for vote in self.request.user.votes.filter(work=self.object)]
         return context
