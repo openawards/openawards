@@ -501,6 +501,16 @@ footer .dev-by a {
   border-radius: 13px;
 }
 
+.user-form {
+  margin: 25px 0 40px 0;
+}
+.user-form div {
+  margin: 5px 0;
+}
+.user-form hr {
+  margin: 20px 0;
+}
+
 .work-li {
   width: 100%;
   border: 1px solid #528564;

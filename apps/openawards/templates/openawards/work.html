@@ -42,7 +42,10 @@
         var getImgButton = $('#change-image-btn');
         var fileField = $('#cover');
         var profileImage = $('#cover-img');
-        imageControl(getImgButton, fileField, profileImage);
+        imageControl(getImgButton, fileField, profileImage, function() {
+          $('#cover-img').width(150);
+          $('#cover-img').height(150);
+        });
     });
 </script>
 </div>
