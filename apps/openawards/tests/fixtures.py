@@ -46,6 +46,14 @@ class AwardFactory(factory.django.DjangoModelFactory):
         model = apps.get_model('openawards', 'Award')
     name = factory.Sequence(lambda n: "Award %d" % n)
     active = True
+    starts_on = fuzzy.FuzzyDateTime(
+        start_dt=timezone.now() - datetime.timedelta(days=100),
+        end_dt=timezone.now()
+    )
+    ends_on = fuzzy.FuzzyDateTime(
+        start_dt=timezone.now(),
+        end_dt=timezone.now() + datetime.timedelta(days=100)
+    )
 
 
 class WorkFactory(factory.django.DjangoModelFactory):

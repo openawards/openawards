@@ -14,6 +14,7 @@ from apps.openawards.lib.utils import storage_files
 import urllib.request as request
 from django.core.files import File
 import tempfile
+from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -136,6 +137,13 @@ class Command(BaseCommand):
                     already_voted.append(ew)
         self.stdout.write(self.style.SUCCESS('Users have voted.'))
 
+    def make_past_award(self, awards):
+        award = random.choice(awards)
+        award.ends_on = timezone.now()
+        award.winners.add(random.choice(award.works.all()))
+        award.save()
+        self.stdout.write(self.style.SUCCESS('An award was forced to finish.'))
+
     def download_and_upload_images(self, users, awards, works):
         def _download_and_upload_images(obj, prop):
             url = str(getattr(obj, prop))
@@ -165,5 +173,6 @@ class Command(BaseCommand):
         works = self.create_works(licenses, users, use_factory=not is_test, n_works=n_works)
         enrolled_works = self.enroll_works(awards, works)
         self.vote_works(users, enrolled_works)
+        self.make_past_award(awards)
         if not is_test:
             self.download_and_upload_images(users, awards, works)
