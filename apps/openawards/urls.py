@@ -11,6 +11,7 @@ urlpatterns = [
     path('work/<work>/vote/<award>', views.VoteView.as_view(), name='vote'),
     path('enroll', views.EnrollView.as_view(), name='enroll'),
     path('new-work', views.NewWorkView.as_view(), name='new_work'),
+    path('edit-work/<slug:slug>', views.WorkUpdateView.as_view(), name='edit_work'),
     path('user/<username>/profile', views.ProfileDetailView.as_view(), name='profile'),
     path('user/profile', views.ProfileDetailView.as_view(), name='my_profile'),
     path('user/account', views.AccountFormView.as_view(), name='account'),

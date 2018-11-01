@@ -16,3 +16,4 @@ from .ProfileDetailView import ProfileDetailView
 from .VoteView import VoteView
 from .WorkDetailView import WorkDetailView
 from .WorksListView import WorksListView
+from .WorkUpdateView import WorkUpdateView
