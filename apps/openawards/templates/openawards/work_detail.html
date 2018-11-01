@@ -30,6 +30,11 @@
                 <p>
                     {{ object.description }}
                 </p>
+                {% if user == object.creator %}
+                <div class="edit-work-button">
+                <a href="{% url 'edit_work' slug=work.slug %}" class="div-button"><div>Edit</div></a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
