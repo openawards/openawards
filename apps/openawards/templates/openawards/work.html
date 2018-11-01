@@ -4,12 +4,13 @@
 <div class="global-content">
 <h2>Work</h2>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="work-form">
 {% csrf_token %}
 
-<div>
+<div class="work-image-container">
   <td>{{ form.cover.label_tag }}</td>
   <td>
+    <div class="">
     <img src="" id="cover-img">
     <a href="#" id="change-image-btn" class="div-button-little">
         <div>
@@ -19,6 +20,7 @@
     <input type="file" id="cover" name="cover" accept="image/png, image/jpeg" style="display: none;"/>
     {% load static %}
     <script src="{% static 'js/image-control.js' %}"></script>
+    </div>
   </td>
 </div>
 <div>

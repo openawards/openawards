@@ -353,7 +353,7 @@ footer .dev-by a {
 }
 .front-section h3 {
   background-color: #B6D1BF;
-  font-size: 3vw;
+  font-size: 1.5vw;
   padding: 20px;
 }
 
@@ -585,6 +585,23 @@ footer .dev-by a {
   margin-top: 10px;
   display: flex;
   flex-direction: row-reverse;
+}
+
+.work-form div {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+}
+.work-form div label {
+  display: inline-block;
+  width: 100px;
+}
+.work-form .work-image-container {
+  display: flex;
+}
+.work-form .work-image-container div {
+  display: flex;
+  flex-direction: column;
 }
 
 .award-detail .award-image {
