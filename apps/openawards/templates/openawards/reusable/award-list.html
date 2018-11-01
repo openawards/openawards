@@ -4,6 +4,12 @@
     </div>
     <div class="work-text">
         <a href="{{ award.absolute_url }}" class="work-title">{{ award.name }}</a> <br>
+        Winners:
+        <ul>
+            {% for winner in award.winners.all %}
+            <li><a href="{{ winner.absolute_url }}">{{ winner.title }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
     {% if show_vote and award not in forbidden_awards %}
     <div class="work-vote">

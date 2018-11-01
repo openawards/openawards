@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Past awards list</h2>
-
+<div class="global-content">
+    <div style="width: 100%;">
+    <h2>Past awards list</h2>
+    </div>
+{% for award in object_list %}
+{% include 'openawards/reusable/award-list.html' with award=award show_vote=False %}
+{% endfor %}
+</div>
 {% endblock %}

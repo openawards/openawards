@@ -8,7 +8,15 @@
         <span class="date">From {{ object.starts_on }} until {{ object.ends_on }}.</span>
         <p>{{ object.description }}</p>
     </div>
-    {% if object.winners|length > 0 %}
+    {% if object.winners.all|length > 0 %}
+        <div style="width: 100%;">
+            <h3>Winners</h3>
+            <ul>
+                {% for winner in award.winners.all %}
+                <li><a href="{{ winner.absolute_url }}">{{ winner.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
         {% if not user.is_anonymous %}
             <div class="enroll-your-work">
