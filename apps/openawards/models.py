@@ -38,7 +38,9 @@ class User(BaseUser):
         if work.creator == self \
                 or Vote.objects.filter(award=award, work=work, fan=self).first() is not None\
                 or work not in award.works.all()\
-                or not award.active:
+                or not award.active\
+                or award.starts_on > timezone.now()\
+                or award.ends_on < timezone.now():
             raise NotValidVoteException
 
         if not self.has_credits:
