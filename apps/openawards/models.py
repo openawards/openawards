@@ -119,7 +119,7 @@ class License(models.Model):
         blank=False,
         unique=True
     )
-    link = models.CharField(max_length=200)
+    url = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name

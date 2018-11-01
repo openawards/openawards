@@ -34,15 +34,15 @@ class Command(BaseCommand):
         licenses = [
             License(
                 name="Attribution 2.0 Generic (CC BY 2.0)",
-                link="https://creativecommons.org/licenses/by/2.0/"
+                url="https://creativecommons.org/licenses/by/2.0/"
             ),
             License(
                 name="Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)",
-                link="https://creativecommons.org/licenses/by-sa/4.0/"
+                url="https://creativecommons.org/licenses/by-sa/4.0/"
             ),
             License(
                 name="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
-                link="https://creativecommons.org/licenses/by-nc/4.0/"
+                url="https://creativecommons.org/licenses/by-nc/4.0/"
             )
         ]
         License.objects.bulk_create(licenses)
@@ -53,7 +53,7 @@ class Command(BaseCommand):
         img = fuzzy.FuzzyChoice(
             storage_files(
                 settings.FIXTURES_PATH_TO_COVERS,
-                'http://' + settings.AWS_S3_CUSTOM_DOMAIN
+                f'http://{settings.AWS_S3_CUSTOM_DOMAIN}/{settings.AWS_STORAGE_BUCKET_NAME}'
             )
         ) if use_factory else None
         awards = [
@@ -87,7 +87,7 @@ class Command(BaseCommand):
         users = UserFactory.create_batch(size=n_users, avatar=fuzzy.FuzzyChoice(
             storage_files(
                 settings.FIXTURES_PATH_TO_AVATARS,
-                'http://' + settings.AWS_S3_CUSTOM_DOMAIN
+                f'http://{settings.AWS_S3_CUSTOM_DOMAIN}/{settings.AWS_STORAGE_BUCKET_NAME}'
             )
         ) if use_factory else None)
         self.stdout.write(self.style.SUCCESS('Fake data for model %s created.' % 'Users'))
@@ -99,7 +99,7 @@ class Command(BaseCommand):
             cover=fuzzy.FuzzyChoice(
                 storage_files(
                     settings.FIXTURES_PATH_TO_LITTLE,
-                    'http://' + settings.AWS_S3_CUSTOM_DOMAIN
+                    f'http://{settings.AWS_S3_CUSTOM_DOMAIN}/{settings.AWS_STORAGE_BUCKET_NAME}'
                 )
             ) if use_factory else None,
             license=factory.Iterator(licenses),
