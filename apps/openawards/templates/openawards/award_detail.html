@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="global-content">
-    <img src="{{ object.image.url }}">
-    <h2>{{ object.name }}</h2>
-    From {{ object.starts_on }} until {{ object.ends_on }}.
-    <span>{{ object.description }}</span>
+<div class="global-content award-detail">
+    <img src="{{ object.image.url }}" class="award-image">
+    <div>
+        <h2>{{ object.name }}</h2>
+        <span class="date">From {{ object.starts_on }} until {{ object.ends_on }}.</span>
+        <p>{{ object.description }}</p>
+    </div>
     {% if object.winners|length > 0 %}
     {% elif not user.is_anonymous %}
+        <div class="enroll-your-work">
         <h3>Enrolled works:</h3>
         <a href="javascript:$('#my-works').css('display', 'block');" class="div-button"><div>Enroll your work</div></a>
+        </div>
         <div id="my-works" style="display: none;">
             <form id="enroll-form" method="post" action="{% url 'enroll' %}">
                 {% csrf_token %}
                 <input type="hidden" name="award" value="{{ object.id }}">
+                Choose your work to enroll in this award:
                 <select id="work" name="work">
                     {% for work in user.works.all %}
                         {% if work not in object.works.all %}
