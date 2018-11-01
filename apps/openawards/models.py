@@ -8,6 +8,7 @@ from constance import config
 from django.utils import timezone
 from django.db.models import Sum
 from django.shortcuts import reverse
+from uuid import uuid4
 
 
 # upload_to=lazy_upload_to('user.avatar/{0}/{1}')
@@ -18,12 +19,16 @@ def lazy_upload_to(str_to_format):
 
 
 def upload_path(instance, filename):
+    """
+    When you add a cover to a new work or award, it does not have an id yet. The url would take None as id
+    so it won't overwrite the previous image and the new one won't take effect.
+    """
     if isinstance(instance, User):
         return 'user.avatar/{0}/avatar.png'.format(instance.username, filename)
     elif isinstance(instance, Work):
-        return 'work.cover/{0}/cover.png'.format(str(instance.id), filename)
+        return 'work.cover/{0}/cover.png'.format(str(uuid4()), filename)
     elif isinstance(instance, Award):
-        return 'award.image/{0}/image.png'.format(str(instance.id), filename)
+        return 'award.image/{0}/image.png'.format(str(uuid4()), filename)
 
 
 class User(BaseUser):
