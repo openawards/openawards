@@ -1,4 +1,0 @@
--r base.txt
-
-factory-boy==2.11.1
-lorem==0.1.1
