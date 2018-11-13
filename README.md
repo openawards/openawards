@@ -12,7 +12,8 @@ module that sets `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` ️ values.*
 
 ### Update requirements
 
-`pip install -r OpenAwards/requirements/dev.txt`
+Make sure you have pipenv installed and to initiate it in the project's folder.
+If you are using PyCharm, use [this guide](href="https://www.jetbrains.com/help/pycharm/pipenv.html") to set everything up.
 
 ### Start a DB server
 
