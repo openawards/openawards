@@ -55,3 +55,10 @@ CSS styles are coded in Sass, you need to compile the scss code:
 You should add a new config file setting, at least, the next variables `DEBUG = False`, 
 `ALLOWED_HOSTS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_STORAGE_BUCKET_NAME`, 
 and `SECRET_KEY`.
+
+### Docker
+
+Build the image from the root folder:
+
+`$ docker build -f ./docker/Dockerfile -t enawards .`
+
