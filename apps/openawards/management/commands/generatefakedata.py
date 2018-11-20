@@ -177,5 +177,6 @@ class Command(BaseCommand):
             self.make_past_award(awards)
             if not is_test:
                 self.download_and_upload_images(users, awards, works)
-        except:
-            self.stdout.write(self.style.SUCCESS('Failed to create data for model'))
+        except Exception as ex:
+            self.stdout.write(self.style.ERROR('Failed to create data for model'))
+            self.stdout.write(self.style.ERROR(ex.message))
