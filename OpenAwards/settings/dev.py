@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'openawards',
         'USER': 'postgres',
         'PASSWORD': 'mysecretpassword',
-        'HOST': '127.0.0.1',
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
     }
 }
 
@@ -129,6 +129,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = './staticfiles/'
 
 from django.utils.translation import gettext_lazy as _
 

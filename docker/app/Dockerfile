@@ -7,7 +7,7 @@ RUN mkdir -p /srv/app
 WORKDIR /srv/app
 
 RUN pip install --upgrade pip
-COPY ./Pipfile /srv/app/Pipfile
+COPY Pipfile /srv/app/Pipfile
 
 RUN pip install pipenv
 RUN apk update \
@@ -16,8 +16,4 @@ RUN apk update \
 	&& apk add jpeg-dev zlib-dev py-pillow \
 	&& apk add postgresql-dev \
 	&& pipenv install --skip-lock --system
-COPY . /srv/app/
 
-# ENV PATH /usr/local/bin:$PATH
-
-CMD python manage.py runserver

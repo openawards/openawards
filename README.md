@@ -58,7 +58,41 @@ and `SECRET_KEY`.
 
 ### Docker
 
-Build the image from the root folder:
+Build the image on the root folder:
 
-`$ docker build -f ./docker/Dockerfile -t enawards .`
+`$ env DJANGO_SETTINGS_MODULE=OpenAwards.settings.production docker-compose --file docker/docker-compose.yml build`
+
+Run the app with (you should put the production.py settings file on OpenAwards/settings folder):
+
+`$ env DJANGO_SETTINGS_MODULE=OpenAwards.settings.production docker-compose --file docker/docker-compose.yml up`
+
+It will give an error due the DB 'openawards' has not been created yet. So the best option
+is to log in into the db container and create it (to see the db container id: `$ docker ps`).
+Then:
+
+```
+$ docker exec -ti <db container id> sh
+$ env PGPASSWORD=mysecretpassword psql -h 127.0.0.1 -U postgres
+postgres=# create database openawards;
+```
+
+After that you should migrate the db:
+
+```
+$ docker exec -ti <app container id> sh
+$ python manage.py migrate
+$ python manage.py collectstatic
+```
+
+You could also generate fake data with:
+
+```
+$ python manage.py generatefakedata
+```
+
+Or create the super user with:
+
+```
+$ python manage.py createsuperuser
+```
 
