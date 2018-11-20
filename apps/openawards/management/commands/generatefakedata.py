@@ -162,17 +162,20 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Updated cover works.'))
 
     def handle(self, *args, **options):
-        is_test = options['is-test']
-        n_works = options['works']
-        n_users = options['users']
-        assert settings.DEBUG or is_test
-        Flush().handle(interactive=not is_test, database=DEFAULT_DB_ALIAS, **options)
-        licenses = self.create_licenses()
-        awards = self.create_awards(use_factory=not is_test)
-        users = self.create_users(use_factory=not is_test, n_users=n_users)
-        works = self.create_works(licenses, users, use_factory=not is_test, n_works=n_works)
-        enrolled_works = self.enroll_works(awards, works)
-        self.vote_works(users, enrolled_works)
-        self.make_past_award(awards)
-        if not is_test:
-            self.download_and_upload_images(users, awards, works)
+        try:
+            is_test = options['is-test']
+            n_works = options['works']
+            n_users = options['users']
+            assert settings.DEBUG or is_test
+            Flush().handle(interactive=not is_test, database=DEFAULT_DB_ALIAS, **options)
+            licenses = self.create_licenses()
+            awards = self.create_awards(use_factory=not is_test)
+            users = self.create_users(use_factory=not is_test, n_users=n_users)
+            works = self.create_works(licenses, users, use_factory=not is_test, n_works=n_works)
+            enrolled_works = self.enroll_works(awards, works)
+            self.vote_works(users, enrolled_works)
+            self.make_past_award(awards)
+            if not is_test:
+                self.download_and_upload_images(users, awards, works)
+        except:
+            self.stdout.write(self.style.SUCCESS('Failed to create data for model'))
