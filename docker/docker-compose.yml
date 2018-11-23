@@ -23,13 +23,13 @@ services:
       - POSTGRES_PASSWORD=mysecretpassword
     ports:
       - 5432:5432
-  nginx:
-    build:
-      context: ../
-      dockerfile: ./docker/nginx/Dockerfile
-    volumes:
-      - ../staticfiles:/srv/app/staticfiles
-    ports:
-      - ${NGINX_PORT}:80
-    depends_on:
-      - app
+#  nginx:
+#    build:
+#      context: ../
+#      dockerfile: ./docker/nginx/Dockerfile
+#    volumes:
+#      - ../staticfiles:/srv/app/staticfiles
+#    ports:
+#      - ${NGINX_PORT}:80
+#    depends_on:
+#      - app
