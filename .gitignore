@@ -3,3 +3,8 @@
 env
 venv
 .idea/
+**.css.map
+node_modules
+staticfiles/**
+/*/settings/local_*.py
+.python-version

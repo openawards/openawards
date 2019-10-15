@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="big-content">
+<div class="generic column">
+    <h1>Authorship claiming</h1>
+    <div class="bottom-spacer">
+        <p>{{ subtitle }}</p>
+    </div>
+    <div class="generic-content">
+        <h2 class="bottom-spacer">Work: {{ work_title }}</h2>
+        <form action="{% url 'work_claim_authorship' slug=slug %}" method="post" class="work-form"
+              id="authorship-form">
+            {% csrf_token %}
+            {{ form }}
+            <a href="#" class="div-button" onclick="$('#authorship-form').submit();">
+                <div>
+                  Send
+                </div>
+            </a>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

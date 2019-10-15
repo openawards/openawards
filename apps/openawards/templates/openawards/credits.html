@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="global-content" style="margin-top: 100px;">
+    <h1>Purchase credits</h1>
+    <a href="{% url 'get_credits' %}" class="div-button">
+    <div style="background-color: red;">
+      Get Credits Now
+    </div>
+    </a>
+    <div style="margin-top: 50px;">
+        <h1>Exchange a coupon code</h1>
+        {% if messages %}
+        <ul class="message-container">
+           {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}-message"{% endif %}>{{ message }}</li>
+           {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="{% url 'credits' %}" method="post" class="work-form"
+              id="authorship-form">
+            {% csrf_token %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            <div style="width: 100%;">
+                <label for="id_code" style="width: 60px;">Code:</label>
+                <input type="text" name="code" maxlength="100" required="" id="id_code" style="width: 100%;">
+            </div>
+            <a href="#" class="div-button" onclick="$('#authorship-form').submit();">
+                <div>
+                  Send
+                </div>
+            </a>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

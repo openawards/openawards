@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="big-content">
+    <div class="front-section">
+        <h3>Current awards</h3>
+        <div class="front-list awards-list">
+            {% for award in awards %}
+                {% include 'openawards/reusable/award-thumbnail.html' with award=award %}
+            {% empty %}
+              No works here!
+            {% endfor %}
+        </div>
+    </div>
+    <div class="front-section">
+        <h3>Works selection</h3>
+        <div class="front-list works-list">
+            {% for work in works %}
+                {% include 'openawards/reusable/work-thumbnail.html' with work=work %}
+            {% empty %}
+              No works here!
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

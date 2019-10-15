@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="global-content award-detail">
+    <img src="{{ object.image.url }}" class="award-image">
+    <div>
+        <h2>{{ object.name }}</h2>
+        <span class="date">From {{ object.starts_on }} until {{ object.ends_on }}.</span>
+        <p>{{ object.description }}</p>
+    </div>
+    {% if object.winners.all|length > 0 %}
+        <div style="width: 100%;">
+            <h3>Winners</h3>
+            <ul>
+                {% for winner in award.winners.all %}
+                <li><a href="{{ winner.absolute_url }}">{{ winner.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        {% if not user.is_anonymous %}
+            <div class="enroll-your-work">
+            <h3>Enrolled works:</h3>
+            <a href="#" id="enroll_button" class="div-button"><div>Enroll your work</div></a>
+            </div>
+            <div id="my-works" style="display: none;">
+                <form id="enroll-form" method="post" action="{% url 'enroll' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="award" value="{{ object.id }}">
+                    Choose your work to enroll in this award:
+                    <select id="work" name="work">
+                        {% for work in user.works.all %}
+                            {% if work not in object.works.all %}
+                            <option value="{{ work.id }}">{{ work.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <a href="#" id="enroll_submit" class="div-button-little"><div>Enroll it!</div></a>
+                </form>
+            </div>
+            {% for work in object.works.all %}
+                {% include 'openawards/reusable/work-list.html' with show_vote=True %}
+            {% endfor %}
+            {% include 'openawards/reusable/vote-confirmation-popup.html' %}
+        {% else %}
+            <div class="no-user">
+            Please, <a href="{% url 'login' %}">login</a> to see participant works.
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+<script>
+    $('#enroll_button').click(function(){
+        $('#my-works').css('display', 'block');
+        return false;
+    });
+    $('#enroll_submit').click(function(){
+        $('#enroll-form').submit();
+        return false;
+    });
+</script>
+{% endblock %}

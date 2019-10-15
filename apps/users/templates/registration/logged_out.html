@@ -1,0 +1,6 @@
+{% extends "generic.html" %}
+
+{% block generic %}
+  <h1>Logged out!</h1>
+  <p><a href="{% url 'login'%}">Click here to login again</a>, or go to back the <a href="{% url 'home' %}">home</a>.</p>
+{% endblock %}

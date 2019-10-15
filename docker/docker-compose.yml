@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    environment:
+      - DB_HOST=db
+      - "PYTHONUNBUFFERED=1"
+      - DJANGO_SETTINGS_MODULE=OpenAwards.settings.server_develop
+    command: gunicorn OpenAwards.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ../:/srv
+    depends_on:
+      - db
+    #entrypoint: ["sh", "-c", "sleep 2073600"]
+  db:
+    image: postgres
+    volumes:
+      - /srv/postgres-data/openawards-develop:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf/default.conf:/etc/nginx/conf.d/default.conf
+      - ../:/srv
+    ports:
+      - 8005:80
+    depends_on:
+      - app

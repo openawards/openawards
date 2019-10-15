@@ -1,0 +1,12 @@
+{% extends "openawards/user_detail.html" %}
+
+{% block user_content %}
+<h2>User historic</h2>
+{% for vote in user.votes.all %}
+    <div class="user-historic">
+        You voted <a href="{{ vote.work.absolute_url }}">{{ vote.work.title }}</a> in <a href="{{ vote.award.absolute_url }}">{{ vote.award.name }}</a> on {{ vote.voted_on }}
+    </div>
+{% empty %}
+  No works here!
+{% endfor %}
+{% endblock %}

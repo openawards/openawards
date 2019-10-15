@@ -1,0 +1,71 @@
+{% extends "openawards/user_detail.html" %}
+
+{% block user_begin %}
+<form method="post" id="user-form" enctype="multipart/form-data">
+{% csrf_token %}
+{% endblock %}
+
+{% block under-image %}
+<div class="user-panel">
+    <a href="#" id="change-image-btn" class="div-button-little">
+        <div>
+          Change image
+        </div>
+    </a>
+    {% load static %}
+    <script src="{% static 'js/image-control.js' %}"></script>
+</div>
+{% endblock %}
+
+{% block left_bar %}{% endblock %}
+
+{% block user_content %}
+<h2>User account</h2>
+
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+<div class="user-form">
+    <div>
+        <label for="first_name">First name</label>
+        <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}"><br>
+    </div>
+    <div>
+        <label for="last_name">Last name</label>
+        <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}"><br>
+    </div>
+    <hr>
+    <div>
+        <label for="new_password1">New password</label>
+        <input type="password" name="new_password1" id="new_password1"><br>
+    </div>
+    <div>
+        <label for="new_password2">Repeat the password</label>
+        <input type="password" name="new_password2" id="new_password2"><br>
+    </div>
+</div>
+
+<a href="#" class="div-button" onclick="$('#user-form').submit();">
+    <div>
+      Save changes
+    </div>
+</a>
+{% endblock %}
+
+{% block user_end %}
+<input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" style="visibility: hidden; height: 0;"/>
+<script>
+    $( document ).ready(function() {
+        var getImgButton = $('#change-image-btn');
+        var fileField = $('#avatar');
+        var profileImage = $('#avatar-img');
+        imageControl(getImgButton, fileField, profileImage, function () {
+            $('#avatar-img').removeClass("hidden");
+            $('#avatar-svg').addClass("hidden");
+            $('#avatar-img').width(150);
+            $('#avatar-img').height(150);
+        });
+    });
+</script>
+</form>
+{% endblock %}

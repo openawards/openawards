@@ -1,0 +1,112 @@
+
+.user-data {
+    width: $content-width;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.column-data {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin-right: 20px;
+
+    img {
+        margin: 0 auto;
+        border-radius: 5%;
+        box-shadow: 0 0 4px 0 rgba(0,0,0,.8);
+    }
+
+    .realname {
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .username {
+        margin-top: 5px;
+        color: $color-3;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .credits {
+        background-color: $color-4;
+        margin-top: 20px;
+        border-radius: 5%;
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+
+        span {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .number {
+            font-size: 5rem;
+            background-color: $color-1;
+            border-radius: 50%;
+            color: $color-5;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+.user-panel {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.user-content {
+    width: 85%;
+
+    .user-content-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .works-content {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+.user-historic {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid $color-4;
+    border-radius: 13px;
+}
+
+.user-form {
+    margin: 25px 0 40px 0;
+
+    div {
+        margin: 5px 0;
+    }
+
+    hr {
+        margin: 20px 0;
+    }
+}

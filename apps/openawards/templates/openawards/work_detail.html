@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="global-content work-detail">
+    <div class="work-data">
+        <div>
+            <img src="{{ object.cover.url }}">
+        </div>
+        <div>
+            <h2>{{ object.title }}</h2>
+            Thanks to <a href="{{ object.creator.profile_url }}">{{ object.creator.full_name }}</a>
+            <div class="work-url">
+                <span>You can find it on </span><a href="{{ object.url }}">{{ object.url }}</a>
+            </div>
+            <div class="work-data-details">
+                <span class="date">Registered on: {{ object.created }}</span>
+                <br>
+                <span>License: </span><a href="{{ object.license.url }}">{{ object.license.name }}</a><br>
+                {% if object.won_at|length > 0 %}
+                <span>Awarded on:</span>
+                <ul>
+                    {% for award in object.won_at %}
+                    <li>{{ award.name}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div>
+                <h3>Description:</h3>
+                <p>
+                    {{ object.description }}
+                </p>
+                {% if user == object.creator %}
+                <div class="edit-work-button">
+                <a href="{% url 'edit_work' slug=work.slug %}" class="div-button"><div>Edit</div></a>
+                </div>
+                {% else %}
+                    <p>Not the right artist? <a href="{% url 'work_claim_authorship' slug=work.slug %}">Claim authorship</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if object.current_awards|length > 0 %}
+    <div class="work-awards">
+        <h3>Taking part on:</h3>
+            {% for award in object.current_awards %}
+                {% include 'openawards/reusable/award-list.html' with show_vote=True %}
+            {% endfor %}
+            {% include 'openawards/reusable/vote-confirmation-popup.html' %}
+    </div>
+    {% else %}
+    <div class="not-enrolled">This work is not enrolled at any award.</div>
+    {% endif %}
+</div>
+{% endblock %}

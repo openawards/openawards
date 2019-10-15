@@ -1,0 +1,12 @@
+<div class="work-li">
+    <div>
+        <img src="{{ work.cover.url }}">
+    </div>
+    <div class="work-text">
+        <a href="{{ work.absolute_url }}" class="work-title">{{ work.title }}</a> <br>
+        <span>Thanks to <a href="{{ work.creator.profile_url }}">{{ work.creator.full_name }}</a></span>
+    </div>
+    {% if show_vote and work not in forbidden_works %}
+        {% include 'openawards/reusable/vote-button.html' %}
+    {% endif %}
+</div>
