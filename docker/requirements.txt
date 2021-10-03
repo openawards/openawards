@@ -2,7 +2,7 @@ arrow==0.12.1
 boto==2.49.0
 boto3==1.9.25
 botocore==1.12.39
-Django==2.1.2
+Django==2.2.24
 django-constance==2.3.1
 django-picklefield==1.1.0
 django-storages==1.7.1
