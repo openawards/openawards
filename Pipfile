@@ -6,7 +6,6 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-"psycopg2-binary" = "==2.7.5"
 pytz = "==2018.5"
 django-constance = "==2.3.1"
 django-picklefield = "==1.1.0"
@@ -14,7 +13,6 @@ django-picklefield = "==1.1.0"
 django-storages = "==1.7.1"
 lorem = "==0.1.1"
 Django = "==2.1.2"
-Pillow = "==5.3.0"
 Markdown = "==3.0.1"
 factory_boy = "==2.11.1"
 gunicorn = "==19.9.0"
@@ -29,6 +27,8 @@ six = "==1.11.0"
 text-unidecode = "==1.2"
 "urllib3" = "==1.24.1"
 Faker = "==0.9.2"
+pillow = "*"
+psycopg2-binary = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

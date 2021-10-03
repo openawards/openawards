@@ -17,12 +17,11 @@ If you are using PyCharm, use [this guide](href="https://www.jetbrains.com/help/
 
 ### Start a DB server
 
-`$ sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword postgres`
+`$ sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -name postgres postgres`
 
 Then you could connect to the DB server and create DB:
 ```
-$ export PGPASSWORD=mysecretpassword && psql -U postgres -h 127.0.0.1`
-create database openawards;
+$ docker exec --user postgres postgres createdb openawards
 ```
 
 ### Create the DB structure
