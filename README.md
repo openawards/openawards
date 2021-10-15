@@ -1,7 +1,7 @@
 # OpenAwards
 
 OpenAwards is a platform to remunerate all those artists, scientists, writers, and any kind of
-creators who open their work to the world without asking for any payment. 
+creators who open their work to the world without asking for any payment.
 
 OpenAwards uses a voting system to choose who and how should receive a prize.
 
@@ -43,7 +43,9 @@ env DJANGO_SETTINGS_MODULE=OpenAwards.settings.my_settings python manage.py gene
 ### Edit styles
 CSS styles are coded in Sass, you need to compile the scss code:
 
-```apps/openawards/static/styles/scss$ sass --watch main.scss:../stylesheet.css```
+```
+apps/openawards/static/styles/scss$ sass --watch main.scss:../stylesheet.css
+```
 
 ### Start a dev server
 
@@ -51,8 +53,8 @@ CSS styles are coded in Sass, you need to compile the scss code:
 
 ### For production
 
-You should add a new config file setting, at least, the next variables `DEBUG = False`, 
-`ALLOWED_HOSTS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_STORAGE_BUCKET_NAME`, 
+You should add a new config file setting, at least, the next variables `DEBUG = False`,
+`ALLOWED_HOSTS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_STORAGE_BUCKET_NAME`,
 and `SECRET_KEY`.
 
 ### Docker
@@ -97,27 +99,45 @@ $ python manage.py createsuperuser
 
 
 
-NOTES OF ALFREDS to get running on local, october 2021: 
+NOTES OF ALFREDS to get running on local, october 2021:
 Necesitarás instalar las dependencias haciendo:
+```
 pipenv install
+```
 
 [2] Necesitarás arrancar Postgres (en una terminal a parte):
-docker run --rm -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --name postgres postgres
+```
+docker run --rm -p 5432:5432 -e
+```
+
+```
+POSTGRES_PASSWORD=mysecretpassword --name postgres postgres
+```
 
 [3] Crear la base de datos de Postgres:
+```
 docker exec --user postgres postgres createdb openawards
+```
 
 [4] Crear la estructura de datos:
+```
 pipenv run python ./manage.py makemigrations
+```
 
 [5] Añadir la estructura de datos a Postgres:
+```
 pipenv run python ./manage.py migrate
+```
 
 [6] Arrancar el sistema:
+```
 pipenv run python ./manage.py runserver
+```
 
 Y ya deberías de poder acceder al: http://127.0.0.1:8000/
 
 Temo, por anteriores conversaciones, de que tengas un postgres instalado en el sistema. Si tienes problemas en el [3] puedes intentar hacer:
+```
 sudo apt purge postgres
 docker system prune -a
+```
