@@ -7,7 +7,7 @@ OpenAwards uses a voting system to choose who and how should receive a prize.
 
 ## Prepare the develop environment
 
-*⚠️ Please, remember to set a `DJANGO_SETTINGS_MODULE` environment variable pointing to a config
+*⚠️ Please, remind to set a `DJANGO_SETTINGS_MODULE` environment variable pointing to a config
 module that sets `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` ️ values.*
 
 ### Update requirements
@@ -96,44 +96,47 @@ Or create the super user with:
 ```
 $ python manage.py createsuperuser
 ```
-
-
-
+=======================================================
 NOTES OF ALFREDS to get running on local, october 2021:
 
-Necesitarás instalar las dependencias haciendo:
+Need to install dependencies with
 ```
 pipenv install
 ```
+start pipenv with:
+```
+pipenv shell
+```
+???
 
-[2] Necesitarás arrancar Postgres (en una terminal a parte):
+[2] You will need to start Postgres (in another terminal):
 ```
 docker run --rm -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --name postgres postgres
 ```
 
-[3] Crear la base de datos de Postgres:
+[3] Create the Postgres database:
 ```
 docker exec --user postgres postgres createdb openawards
 ```
 
-[4] Crear la estructura de datos:
+[4] Create the database:
 ```
 pipenv run python ./manage.py makemigrations
 ```
 
-[5] Añadir la estructura de datos a Postgres:
+[5] Add the database structure in Postgres:
 ```
 pipenv run python ./manage.py migrate
 ```
 
-[6] Arrancar el sistema:
+[6] Start the system:
 ```
 pipenv run python ./manage.py runserver
 ```
 
-Y ya deberías de poder acceder al: http://127.0.0.1:8000/
+The openawards should be up and running at: http://127.0.0.1:8000/
 
-Temo, por anteriores conversaciones, de que tengas un postgres instalado en el sistema. Si tienes problemas en el [3] puedes intentar hacer:
+If you have problems it may be you already have a postgres installed. You can try in [3] :
 ```
 sudo apt purge postgres
 docker system prune -a
