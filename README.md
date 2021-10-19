@@ -38,7 +38,7 @@ Probably you will need to add your AWS credentials into a settings module and la
 ```
 env DJANGO_SETTINGS_MODULE=OpenAwards.settings.my_settings python manage.py generatefakedata
 ```
-  
+
 
 ### Edit styles
 CSS styles are coded in Sass, you need to compile the scss code:
@@ -108,11 +108,7 @@ pipenv install
 
 [2] Necesitarás arrancar Postgres (en una terminal a parte):
 ```
-docker run --rm -p 5432:5432 -e
-```
-
-```
-POSTGRES_PASSWORD=mysecretpassword --name postgres postgres
+docker run --rm -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --name postgres postgres
 ```
 
 [3] Crear la base de datos de Postgres:
