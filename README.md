@@ -99,7 +99,6 @@ start pipenv with:
 ```
 pipenv shell
 ```
-???
 
 [2] You will need to start Postgres (in another terminal):
 ```
