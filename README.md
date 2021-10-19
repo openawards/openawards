@@ -100,6 +100,7 @@ $ python manage.py createsuperuser
 
 
 NOTES OF ALFREDS to get running on local, october 2021:
+
 Necesitarás instalar las dependencias haciendo:
 ```
 pipenv install
