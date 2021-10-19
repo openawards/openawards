@@ -17,7 +17,7 @@ If you are using PyCharm, use [this guide](href="https://www.jetbrains.com/help/
 
 ### Start a DB server
 
-`$ sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -name postgres postgres`
+`sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -name postgres postgres`
 
 Then you could connect to the DB server and create DB:
 ```
