@@ -20,9 +20,7 @@ If you are using PyCharm, use [this guide](https://www.jetbrains.com/help/pychar
 `sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -name postgres postgres`
 
 Then you could connect to the DB server and create DB:
-```
-$ docker exec --user postgres postgres createdb openawards
-```
+`docker exec --user postgres postgres createdb openawards`
 
 ### Create the DB structure
 ```
@@ -31,25 +29,19 @@ python3 manage.py migrate
 ```
 
 At this point you could add fake data (⚠ this action erases data in DB):
-```
-python3 manage.py generatefakedata
-```
-Probably you will need to add your AWS credentials into a settings module and launch it like:
-```
-env DJANGO_SETTINGS_MODULE=OpenAwards.settings.my_settings python manage.py generatefakedata
-```
+`python3 manage.py generatefakedata`
 
+Probably you will need to add your AWS credentials into a settings module and launch it like:
+`env DJANGO_SETTINGS_MODULE=OpenAwards.settings.my_settings python manage.py generatefakedata`
 
 ### Edit styles
 CSS styles are coded in Sass, you need to compile the scss code:
 
-```
-apps/openawards/static/styles/scss$ sass --watch main.scss:../stylesheet.css
-```
+`apps/openawards/static/styles/scss$ sass --watch main.scss:../stylesheet.css`
 
 ### Start a dev server
 
-`$ python manage runserver`
+`python manage runserver`
 
 ### For production
 
@@ -61,7 +53,7 @@ and `SECRET_KEY`.
 
 Build the image on the root folder:
 
-`$ env DJANGO_SETTINGS_MODULE=OpenAwards.settings.production docker-compose --file docker/docker-compose.yml build`
+`env DJANGO_SETTINGS_MODULE=OpenAwards.settings.production docker-compose --file docker/docker-compose.yml build`
 
 Run the app with (you should put the production.py settings file on OpenAwards/settings folder):
 
@@ -72,29 +64,29 @@ is to log in into the db container and create it (to see the db container id: `$
 Then:
 
 ```
-$ docker exec -ti <db container id> sh
-$ env PGPASSWORD=mysecretpassword psql -h 127.0.0.1 -U postgres
+docker exec -ti <db container id> sh
+env PGPASSWORD=mysecretpassword psql -h 127.0.0.1 -U postgres
 postgres=# create database openawards;
 ```
 
 After that you should migrate the db:
 
 ```
-$ docker exec -ti <app container id> sh
-$ python manage.py migrate
-$ python manage.py collectstatic
+docker exec -ti <app container id> sh
+python manage.py migrate
+python manage.py collectstatic
 ```
 
 You could also generate fake data with:
 
 ```
-$ python manage.py generatefakedata
+python manage.py generatefakedata
 ```
 
 Or create the super user with:
 
 ```
-$ python manage.py createsuperuser
+python manage.py createsuperuser
 ```
 =======================================================
 NOTES OF ALFREDS to get running on local, october 2021:
