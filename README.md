@@ -1,9 +1,9 @@
 # OpenAwards
 
 OpenAwards is a platform to remunerate all those artists, scientists, writers, and any kind of
-creators who open their work to the world without asking for any payment.
+creators who release their work to the world without asking for payment.
 
-OpenAwards uses a voting system to choose who and how should receive a prize.
+OpenAwards uses a voting system to choose who and should receive a prize and for what.
 
 ## Prepare the develop environment
 
