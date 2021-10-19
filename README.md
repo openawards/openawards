@@ -7,7 +7,7 @@ OpenAwards uses a voting system to choose who and how should receive a prize.
 
 ## Prepare the develop environment
 
-*⚠️ Please, remind to set a `DJANGO_SETTINGS_MODULE` environment variable pointing to a config
+*⚠️ Please, remember to set a `DJANGO_SETTINGS_MODULE` environment variable pointing to a config
 module that sets `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` ️ values.*
 
 ### Update requirements
